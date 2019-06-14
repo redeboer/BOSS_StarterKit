@@ -15,6 +15,7 @@ CMTHOME="/afs/ihep.ac.cn/bes3/offline/Boss/cmthome/cmthome-${BOSSVERSION}"
 # * Load BOSS essentials * #
 source "${BOSSINSTALL}/${CMTHOMENAME}/setupCMT.sh"
 source "${BOSSINSTALL}/${CMTHOMENAME}/setup.sh"
+export PATH=$PATH:/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/
 
 # Fetch TestRelease if not available
 if [[ ! -d "${BOSSINSTALL}/workarea/TestRelease" ]]; then
@@ -26,6 +27,4 @@ if [[ ! -d "${BOSSINSTALL}/workarea/TestRelease" ]]; then
   make
   cd "${currentPath}"
 fi
-
 source "${BOSSINSTALL}/${WORKAREANAME}/TestRelease/TestRelease-"*"/cmt/setup.sh"
-export PATH=$PATH:/afs/ihep.ac.cn/soft/common/sysgroup/hep_job/bin/
