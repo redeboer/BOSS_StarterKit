@@ -1,9 +1,11 @@
 currentPath="$(pwd)"
-cd "$( dirname "${BASH_SOURCE[0]}" )"
+scriptPath="$( dirname "${BASH_SOURCE[0]}" )"
+cd "${scriptPath}"
 
 repoName=$(basename $(git config --get remote.origin.url) )
 repoName=${repoName/.git}
 export ${repoName}="$(pwd)"
+alias reloadstarterkit="source ${scriptPath}/setup.sh"
 
 source "setup/FunctionsPrint.sh"
 source "setup/FunctionsRoot.sh"

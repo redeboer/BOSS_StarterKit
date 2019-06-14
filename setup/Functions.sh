@@ -12,6 +12,7 @@
 # * ============================================================================= * #
 
 
+
 # * ================================== * #
 # * ------- SCRIPT INITIALISER ------- * #
 # * ================================== * #
@@ -37,20 +38,22 @@
 
 	function AttemptToExecute()
 	{
+		local currentPath="$(pwd)"
 		local commandToExecute="${1}"
 		PrintBold "\n--== EXECUTING \"${commandToExecute}\" ==--\n"
 		${commandToExecute}
 		if [ $? != 0 ]; then
 			PrintError "Failed to execute \"${commandToExecute}\""
+			cd "${currentPath}"
 			return 1
 		fi
+		cd "${currentPath}"
 	}
 	export AttemptToExecute
 
 
 	function cdcmt()
 	{
-		# * Attempt to move to last cmt folder
 		local currentPath="$(pwd)"
 		if [ "$(basename "${currentPath}")" != "cmt" ]; then
 			local cmtFolder="$(find -name cmt | head -1)"
@@ -67,22 +70,16 @@
 	function cmtbroadcast()
 	{
 		local currentPath="$(pwd)"
-		cdcmt
-		# * Print package and version name
-		PrintHeader "BROADCASTING PACKAGE \"$(basename $(dirname $(pwd)))\""
-		# * Connect your workarea to BOSS
-		AttemptToExecute "cmt broadcast"
-		if [ $? != 0 ]; then return 1; fi
-		# * Perform setup and cleanup scripts
-		AttemptToExecute "cmt config"
-		if [ $? != 0 ]; then return 1; fi
-		# * Build and connect executables to BOSS
-		AttemptToExecute "cmt broadcast make"
-		if [ $? != 0 ]; then return 1; fi
-		# * Set bash variables
+		cdcmt && \
+		PrintHeader "BROADCASTING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
+		AttemptToExecute "cmt broadcast" && \
+		AttemptToExecute "cmt config" && \
+		AttemptToExecute "cmt broadcast make" && \
 		AttemptToExecute "source setup.sh"
-		if [ $? != 0 ]; then return 1; fi
-		# * Move back to original path
+		if [[ $? != 0 ]]; then
+			cd "${currentPath}"
+			return 1
+		fi
 		cd "${currentPath}"
 	}
 	export cmtbroadcast
@@ -91,21 +88,16 @@
 	function cmtconfig()
 	{
 		local currentPath="$(pwd)"
-		cdcmt
-		# * Print package and version name
-		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\""
-		# * Create CMT scripts
-		AttemptToExecute "cmt config"
-		if [ $? != 0 ]; then return 1; fi
-		# * Build executables
-		AttemptToExecute "make"
-		if [ $? != 0 ]; then return 1; fi
-		# * Make package available to BOSS
+		cdcmt && \
+		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
+		AttemptToExecute "cmt config" && \
+		AttemptToExecute "make" && \
 		AttemptToExecute "source setup.sh"
-		if [ $? != 0 ]; then return 1; fi
-		# * Move back to original path
+		if [[ $? != 0 ]]; then
+			cd "${currentPath}"
+			return 1
+		fi
 		cd "${currentPath}"
-		return 0
 	}
 	export cmtconfig
 
@@ -113,15 +105,14 @@
 	function cmtmake()
 	{
 		local currentPath="$(pwd)"
-		cdcmt
-		# * Print package and version name
-		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\""
-		# * Build executables
+		cdcmt && \
+		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
 		AttemptToExecute "make"
-		if [ $? != 0 ]; then return 1; fi
-		# * Move back to original path
+		if [[ $? != 0 ]]; then
+			cd "${currentPath}"
+			return 1
+		fi
 		cd "${currentPath}"
-		return 0
 	}
 	export cmtmake
 
@@ -528,6 +519,12 @@
 		fi
 	}
 	export gitsubmodules
+
+
+	function gitpullall()
+	{
+		git pull && git submodule foreach "git pull"
+	}
 
 
 

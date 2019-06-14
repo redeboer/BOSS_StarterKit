@@ -12,31 +12,24 @@
 # * ============================================================================= * #
 
 
-export gColorCodeBold="\e[1m"
-export gColorCodeError="\e[91m"
-export gColorCodeSuccess="\e[92m"
-export gColorCodeInput="\e[93m"
-export gColorCodeEnd="\e[0m"
-
-
 function PrintError()
 {
-	echo -e "${gColorCodeError}ERROR: ${1}${gColorCodeEnd}"
+	echo -e "\e[31;1mERROR: ${1}\e[0m"
 }
 export PrintError
 
 
 function PrintSuccess()
 {
-	echo -e "${gColorCodeSuccess}${1}${gColorCodeEnd}"
+	echo -e "\e[32m${1}\e[0m"
 }
 export PrintSuccess
 
 
 function AskForInput()
 {
-	echo -e "${gColorCodeInput}${1}${gColorCodeEnd}"
-	echo -e "${gColorCodeInput}Press ENTER to continue or break with Ctrl+C or Ctrl+Z${gColorCodeEnd}"
+	echo -e "\e[33m${1}\e[0m"
+	echo -e "\e[33mPress ENTER to continue or break with Ctrl+C or Ctrl+Z\e[0m"
 	read -p ""
 }
 export AskForInput
@@ -44,7 +37,7 @@ export AskForInput
 
 function PrintBold()
 {
-	echo -e "${gColorCodeBold}${1}${gColorCodeEnd}"
+	echo -e "\e[1m${1}\e[0m"
 }
 export PrintBold
 
