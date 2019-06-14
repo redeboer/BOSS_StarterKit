@@ -4,7 +4,7 @@ echo "See https://besiii.gitbook.io/boss/tutorials/getting-started/setup for mor
 read -p "  - Which version of BOSS do you want to install? (default is 7.0.4) " BOSSVERSION
 export BOSSVERSION=${BOSSVERSION:-7.0.4}
 
-BOSSINSTALLdefault="/besfs/users/${USER}/boss"
+BOSSINSTALLdefault="/besfs/users/${USER}/boss-${BOSSVERSION}"
 read -e -p "  - What do you want to be your workarea? (default \"$BOSSINSTALLdefault\") " BOSSINSTALL
 export BOSSINSTALL=${BOSSINSTALL:-$BOSSINSTALLdefault}
 

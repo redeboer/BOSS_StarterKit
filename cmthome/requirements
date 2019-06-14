@@ -41,7 +41,7 @@ path_remove CMTPATH  "${BesArea}"
 path_prepend CMTPATH "${BesArea}"
 
 #Add your worarea to CMTPATH
-macro WorkArea "${BOSSWORKAREA}/workarea"
+macro WorkArea "${BOSSINSTALL}/workarea"
 path_remove  CMTPATH "${WorkArea}"
 path_prepend CMTPATH "${WorkArea}"
 
