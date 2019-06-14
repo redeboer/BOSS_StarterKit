@@ -1,6 +1,6 @@
 # BOSS Starter Kit
 
-For more information on BOSS, see the [BOSS Gitbook](https://besiii.gitbook.io/boss).
+The BOSS Starter Kit contains all the essentials for working with the BESIII Offline Softare System ([BOSS](https://besiii.gitbook.io/boss/tutorials/getting-started/intro)) on IHEP's [`lxslc` server](https://besiii.gitbook.io/boss/tutorials/getting-started/server). In addition, it contains several utilities, such as [`bash` functions](https://github.com/redeboer/BOSS_StarterKit/blob/master/setup/Functions.sh), [`clang-format`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.clang-format), and a [framework to generate Doxygen pages](https://github.com/redeboer/BOSS_StarterKit/blob/master/Doxyfile).
 
 ## How to install?
 
@@ -10,7 +10,7 @@ Get a local copy of this repository by cloning it:
 git clone git@github.com:redeboer/BOSS_StarterKit.git
 ```
 
-You have now downloaded the main ingredients of the Starter Kit.
+You have now downloaded the main ingredients of the Starter Kit and can set up the BOSS environment by using `source setup.sh`.
 
 In addition, this repository contains several [submodules](https://git-scm.com/book/en/Git-Tools-Submodules). There are two types of submodules: (1) *real submodules*, which are listed in the [`.gitmodules`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitmodules) file, and (2) subrepositories, which are not listed, because they are analysis specific. If you navigate into the `BOSS_StarterKit` you cloned just now, you can see an overview of the different submodules using `git submodule status`. Real submodules have an attacted commit ID (e.g. `-4b42a5880dce1bbe13ba580d0b32ac3281b2267a`), while subrepositories are indicated with `No submodule mapping found in .gitmodules for path ...`.
 
