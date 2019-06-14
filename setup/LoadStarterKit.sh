@@ -2,7 +2,7 @@
 
 export BOSS_StarterKit_OutputDir="${BOSS_StarterKit}/output"
 
-for i in $(find "${BOSS_StarterKit}/workarea" -type f -wholename */setup.sh); do
+for i in $(find "${BOSS_StarterKit}/workarea" -type f -wholename "*/setup.sh"); do
   source "$i"
 done
 
