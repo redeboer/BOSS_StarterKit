@@ -525,6 +525,14 @@
 	{
 		git pull && git submodule foreach "git pull"
 	}
+	export gitpullall
+
+
+	function gitignorecmt()
+	{
+		git update-index --assume-unchanged cmt/*.*sh
+	}
+	export gitignorecmt
 
 
 
