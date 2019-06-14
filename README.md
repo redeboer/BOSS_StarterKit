@@ -22,7 +22,7 @@ After you have cloned the BOSS Starter Kit, you can download a specific submodul
  
 ```bash
 git submodule init -- <relative path to submodule>
-git submodule update
+git submodule update -- <relative path to submodule>
 ```
 
 You can also chose to download them all in one go by using:
