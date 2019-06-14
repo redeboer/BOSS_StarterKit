@@ -16,7 +16,7 @@ In addition, this repository contains several [submodules](https://git-scm.com/b
 
 ### (1) Real submodules
 
-Real submodules can be used by anyone in BESIII, and should therefore be available as separate, public repositories. An example are the `Tutorials`: have a look in the `workarea` [here](https://github.com/redeboer/BOSS_StarterKit/tree/master/workarea) and you can see that the `Tutorials` folder has a commit ID attached with `@`. Click that folder, and it will bring you to the original [`BOSS_Tutorials`](https://github.com/redeboer/BOSS_Tutorials/) repository.
+Real submodules can be used by anyone in BESIII and should therefore be available as separate, public repositories. An example are the `Tutorials`: have a look in the `workarea` [here](https://github.com/redeboer/BOSS_StarterKit/tree/master/workarea) and you can see that the `Tutorials` folder has a commit ID attached with `@`. Click that folder, and it will bring you to the original [`BOSS_Tutorials`](https://github.com/redeboer/BOSS_Tutorials/) repository.
 
 After you have cloned the BOSS Starter Kit, you can download a specific submodule using:
  
@@ -47,6 +47,8 @@ git add .
 git commit -m "<commit message>"
 git push
 ```
+
+Another characteristic of a submodule, is it does not contain a `.git` folder. Instead, there is a `.git` file which contains a relative path pointing to the corresponding submodule under the folder `.git/modules` in the BOSS Starter Kit.
 
 ### (2) Subrepositories
 
