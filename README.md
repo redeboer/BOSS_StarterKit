@@ -34,11 +34,27 @@ git submodule update
 
 Note that subrepositories are not downloaded in neither case.
 
+Submodules are tied to certain commits of the corresponding repository. If there that corresponding repository has new commits, you can pull all changes using:
+
+```bash
+git submodule foreach "(git checkout master; git pull)"
+```
+
+Note that the Starter Kit considers this a change: the commits you imported need to be 'reconnected' to the submodule. You can see that the submodules have been moduled with `git status`. To push this as a new commit to the BOSS Starter Kit, use the usual procedure:
+
+```bash
+git add .
+git commit -m "<commit message>"
+git push
+```
+
 ### (2) Subrepositories
 
 Subrepositories (as opposed to submodules) allow the user to implement ones own repository into the BOSS Starter Kit without having it added as a submodule. In essence, a subrepository is just a Git repository that you put inside the BOSS Starter Kit, but that you shield from being commited by adding its relative path to the [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore) file of the Starter Kit. As such, other users of the Starter Kit will not be able to download your subrepository as a submodule, but can only see its existence in [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore).
 
 If you have a cloned a repository within this repository that you do not want to track as a submodule, first add it to the `.gitignore` file, then use `git update-index --assume-unchanged <relative path to subrepository>`. You should use the latter command for the `cmt` folders as well if you do not want the setup files in there to be commited after you used `cmt config` (which will write your user name to those files).
+
+If you navigate inside a subrepository, you can just use Git the way you are used to: `git` commands apply to the subrepository and not to the overarching BOSS Starter Kit repository.
 
 ### Some useful information on submodules
 - [Git submodules on Git SCM](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
