@@ -8,7 +8,7 @@ export ${repoName}="$(pwd)"
 source "setup/FunctionsPrint.sh"
 source "setup/FunctionsRoot.sh"
 source "setup/Functions.sh"
-source "setup/LoadBoss.sh"
+[[ -d "/afs/ihep.ac.cn/bes3/offline" ]] && source "setup/LoadBoss.sh"
 source "setup/LoadStarterKit.sh"
 source "setup/Aliases.sh"
 
