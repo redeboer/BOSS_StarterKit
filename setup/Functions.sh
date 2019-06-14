@@ -460,9 +460,9 @@
 
 
 
-# * ======================== * #
-# * ------- EXTERNAL ------- * #
-# * ======================== * #
+# * =================== * #
+# * ------- GIT ------- * #
+# * =================== * #
 
 
 	function gitsync()
@@ -508,6 +508,33 @@
 		cd - > /dev/null
 	}
 	export gitsync
+
+
+	function gitsubmodules()
+	{
+		local listOfSubmodules=$(find */ -type f -iname ".git")
+		local listOfSubrepos=$(find */ -type d -iname ".git")
+		if [[ ${#listOfSubmodules} -gt 1 ]]; then
+			echo -e "This directory contains \e[1m$(echo ${listOfSubmodules} | wc -w) submodules\e[0m:"
+			for i in ${listOfSubmodules[*]}; do
+				echo " - $(basename $(dirname ${i}))"
+			done
+		fi
+		if [[ ${#listOfSubrepos} -gt 1 ]]; then
+			echo -e "This directory contains \e[1m$(echo ${listOfSubrepos} | wc -w) subrepositories\e[0m:"
+			for i in ${listOfSubrepos[*]}; do
+				echo " - $(basename $(dirname ${i}))"
+			done
+		fi
+	}
+	export gitsubmodules
+
+
+
+
+# * ======================== * #
+# * ------- EXTERNAL ------- * #
+# * ======================== * #
 
 
 	function RunClang()
@@ -567,25 +594,3 @@
 		cd - > /dev/null
 	}
 	export GenerateDoxygen
-
-
-	function RunTopoana()
-	{
-		# * Input parameters * #
-			local inputCard="${1}"
-			local inputPath="$(dirname ${inputCard})"
-			local inputCard="$(basename ${inputCard})"
-
-		# * Move to path * #
-			local currentPath="$(pwd)"
-			local fullPath="${BOSS_StarterPack}/topoana/${inputPath}"
-			if [[ ! -f "${fullPath}/${inputCard}" ]]; then
-				PrintError "Topana card \"${inputPath}/${inputCard}\" does not exist"
-				return 1
-			fi
-			cd "${fullPath}"
-
-		topoana.exe "${inputCard}"
-		cd "${currentPath}"
-	}
-	export RunTopoana
