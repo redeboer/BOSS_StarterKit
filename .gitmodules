@@ -1,0 +1,9 @@
+[submodule "workarea/Tutorials"]
+	path = workarea/Tutorials
+	url = git@github.com:redeboer/BOSS_Tutorials.git
+[submodule "jobs"]
+	path = jobs
+	url = git@github.com:redeboer/BOSS_JobSubmitter.git
+[submodule "workarea/Analysis/IniSelect"]
+	path = workarea/Analysis/IniSelect
+	url = git@github.com:redeboer/BOSS_IniSelect.git
