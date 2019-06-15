@@ -118,6 +118,24 @@
 
 
 
+# * ================================ * #
+# * ------- BOSS STARTER KIT ------- * #
+# * ================================ * #
+
+
+	function GetBossPackage()
+	{
+		if [[ -z "${BesArea}" ]]; then
+			PrintError "Package \"${packageName}\" does not exist in \$BesArea"
+		fi
+		local packageName="${1}"
+		if [[ ! -d "${BesArea}/${packageName}" ]]; then
+			PrintError "Package \"${packageName}\" does not exist in \$BesArea"
+		fi
+	}
+
+
+
 # * ==================================== * #
 # * ------- NAVIGATION FUNCTIONS ------- * #
 # * ==================================== * #
