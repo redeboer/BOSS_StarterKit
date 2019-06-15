@@ -62,3 +62,5 @@ If you navigate inside a subrepository, you can just use Git the way you are use
 - [Git submodules on Git SCM](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 - [Git submodules Git Wiki](https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial)
 - [Working with Git templates](https://git-template.readthedocs.io/en/latest/) (this is a different feature, but the template module has been considered for the Starter Kit)
+
+<!-- test test test -->
