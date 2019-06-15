@@ -126,12 +126,30 @@
 	function GetBossPackage()
 	{
 		if [[ -z "${BesArea}" ]]; then
-			PrintError "Package \"${packageName}\" does not exist in \$BesArea"
+			PrintError "Shell variable \$BesArea has not been defined"
+			return 1
 		fi
-		local packageName="${1}"
-		if [[ ! -d "${BesArea}/${packageName}" ]]; then
-			PrintError "Package \"${packageName}\" does not exist in \$BesArea"
+		if [[ -z "${BOSSINSTALL}" ]] || [[ ! -d "${BOSSINSTALL}" ]]; then
+			PrintError "Shell variable \$BOSSINSTALL has not been defined"
+			return 1
 		fi
+		local currentPath="${pwd}"
+		cd "${BesArea}"
+		local packageName=""
+		printf "Which package do you want to load from the \$BesArea? "
+		read -e packageName
+		if [[ "${packageName}" == "." ]] || [[ -z "${packageName}" ]] || [[ ! -d "${packageName}" ]]; then
+			PrintError "Package \"${packageName}\" does not exist in \$BesArea"
+			cd "${currentPath}"
+			return 1
+		fi
+		if [[ -d "${BOSSINSTALL}/workarea/${packageName}" ]]; then
+			AskForInput "WARNING: Package \"${packageName}\" already exists in your workarea. REMOVE and OVERWRITE?"
+			rm -rf "${BOSSINSTALL}/workarea/${packageName}"
+		fi
+		mkdir -p "${BOSSINSTALL}/workarea/${packageName}"
+		cp -R "${BesArea}/${packageName}/"* "${BOSSINSTALL}/workarea/${packageName}"
+		cd "${currentPath}"
 	}
 
 

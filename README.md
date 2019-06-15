@@ -1,25 +1,44 @@
 # BOSS Starter Kit
 
-The BOSS Starter Kit contains all the essentials for working with the BESIII Offline Softare System ([BOSS](https://besiii.gitbook.io/boss/tutorials/getting-started/intro)) on IHEP's [`lxslc` server](https://besiii.gitbook.io/boss/tutorials/getting-started/server). In addition, it contains several utilities, such as [`bash` functions](https://github.com/redeboer/BOSS_StarterKit/blob/master/setup/Functions.sh), [`clang-format`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.clang-format), and a [framework to generate Doxygen pages](https://github.com/redeboer/BOSS_StarterKit/blob/master/Doxyfile).
+The BOSS Starter Kit is designed to simplify working with the BESIII Offline Softare System ([BOSS](https://besiii.gitbook.io/boss/tutorials/getting-started/intro)) on IHEP's [`lxslc` server](https://besiii.gitbook.io/boss/tutorials/getting-started/server). The design through submodules and the [utilities that come along with it](#main-functions) are to facilitate code collaboration within BESIII.
+
 
 ## How to install?
 
 Get a local copy of this repository by cloning it:
 
 ```
-git clone git@github.com:redeboer/BOSS_StarterKit.git
+git clone https://github.com/redeboer/BOSS_StarterKit.git
 ```
 
-You have now downloaded the main ingredients of the Starter Kit and can set up the BOSS environment by using `source setup.sh`.
+If you prefer to work over SSH, use `git@github.com:redeboer/BOSS_StarterKit.git`.
 
-In addition, this repository contains several [submodules](https://git-scm.com/book/en/Git-Tools-Submodules). There are two types of submodules: (1) *real submodules*, which are listed in the [`.gitmodules`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitmodules) file, and (2) subrepositories, which are not listed, because they are analysis specific. If you navigate into the `BOSS_StarterKit` you cloned just now, you can see an overview of the different submodules using `git submodule status`. Real submodules have an attacted commit ID (e.g. `-4b42a5880dce1bbe13ba580d0b32ac3281b2267a`), while subrepositories are indicated with `No submodule mapping found in .gitmodules for path ...`.
+You have now downloaded the main ingredients of the Starter Kit. The BOSS environment can now be set up easily by navigatinv into the `BOSS_StarterKit` directory and executing `source setup.sh`. If you add `<path to BOSS_StarterKit>/setup.sh` to your `.bash_profile` or `.bash_rc` as well, you have your BOSS environment and all functionality of the Starter Kit loaded whenever you log into `lxslc`.
+
+## Main functions
+
+- [Automatic loading of the BOSS environment](https://github.com/redeboer/BOSS_StarterKit/blob/master/setup/LoadBoss.sh), including fetching a local copy of the `TestRelease` package.
+- Download [collaboration-wide submodules](#1-real-submodules) or [implement your own subrepositories](#2-subrepositories).
+- All your packages in `workarea` are [sourced automatically at startup](https://github.com/redeboer/BOSS_StarterKit/blob/c0a132c175af944751ca038b5cf7fc621e1c5180/setup/LoadStarterKit.sh#L11).
+- Navigate quickly to your own packages through the command `cd<package name in lowercase>`.
+- A [collection of `bash` functions](https://github.com/redeboer/BOSS_StarterKit/blob/master/setup/Functions.sh) that are useful when working with CMT and BOSS.
+- A handy `bash` script that allows you to [quickly set up a BOSS environment elsewhere](https://github.com/redeboer/BOSS_StarterKit/blob/master/utilities/SetupBoss.sh) of whatever BOSS version you choose. If you do not want to use the Starter Kit, you can run it without cloning using `wget https://raw.githubusercontent.com/redeboer/BOSS_StarterKit/master/utilities/SetupBoss.sh; bash SetupBoss.sh`.
+- Automatically standardise the layout of your C++ code using [`clang-format -i <path to some file or directory>`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.clang-format).
+- Generate Doxygen class documentation for all your packages through [`doxygen Doxyfile`](https://github.com/redeboer/BOSS_StarterKit/blob/master/Doxyfile).
+
+
+## Submodules
+
+BOSS is built up of several packages and that are managed through the [Configuration Management Tool (CMT)](http://www.cmtsite.net/CMTDoc.html) and you will be developing your own packages within your local `workarea`. Since this `workarea` folder is [located within the Starter Kit](https://github.com/redeboer/BOSS_StarterKit/tree/master/workarea), and we want the Starter Kit to contain only general tools, these packages somehow need to be prevented from being staged through Git.
+
+For this reason, the Starter Kit repository is therefore built up of several [submodules](https://git-scm.com/book/en/Git-Tools-Submodules). There are two types of submodules: (1) *real submodules*, which are listed in the [`.gitmodules`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitmodules) file, and (2) subrepositories, which are not listed, because they are analysis specific. If you navigate into the `BOSS_StarterKit` you cloned just now, you can see an overview of the different submodules using `git submodule status`. Real submodules have an attacted commit ID (e.g. `-4b42a5880dce1bbe13ba580d0b32ac3281b2267a`), while subrepositories are indicated with `No submodule mapping found in .gitmodules for path ...`. As suggested by the latter, an overview of the real submodules can be found in the [`.gitignore`](.gitmodules) file.
 
 ### (1) Real submodules
 
-Real submodules can be used by anyone in BESIII and should therefore be available as separate, public repositories. An example are the `Tutorials`: have a look in the `workarea` [here](https://github.com/redeboer/BOSS_StarterKit/tree/master/workarea) and you can see that the `Tutorials` folder has a commit ID attached with `@`. Click that folder, and it will bring you to the original [`BOSS_Tutorials`](https://github.com/redeboer/BOSS_Tutorials/) repository.
+Real submodules are general in usage within BESIII and should therefore be available as separate, public repositories. An example are the `Tutorials`: have a look in the `workarea` [here](https://github.com/redeboer/BOSS_StarterKit/tree/master/workarea) and you can see that the `Tutorials` folder has a commit ID attached with `@`. Click that folder, and it will bring you to the corresponding commit of the original [`BOSS_Tutorials`](https://github.com/redeboer/BOSS_Tutorials/) repository.
 
 After you have cloned the BOSS Starter Kit, you can download a specific submodule using:
- 
+
 ```bash
 git submodule init -- <relative path to submodule>
 git submodule update -- <relative path to submodule>
@@ -32,15 +51,15 @@ git submodule init
 git submodule update
 ```
 
-Note that subrepositories are not downloaded in neither case.
-
-Submodules are tied to certain commits of the corresponding repository. If there that corresponding repository has new commits, you can pull all changes using:
+Submodules are tied to certain commits of the corresponding repository. If that corresponding repository has new commits, you can pull all changes using:
 
 ```bash
 git submodule foreach "(git checkout master; git pull)"
 ```
 
-Note that the Starter Kit considers this a change: the commits you imported need to be 'reconnected' to the submodule. You can see that the submodules have been moduled with `git status`. To push this as a new commit to the BOSS Starter Kit, use the usual procedure:
+You might have to use `git fetch --all` as well if you want to push to the corresponding repository.
+
+Note that the overarching Starter Kit repository considers this a change: the commits you imported need to be 'reconnected' to the submodule. You can see that the submodules have been moduled with `git status`. To push this as a new commit to the BOSS Starter Kit, use the usual procedure:
 
 ```bash
 git add .
@@ -52,15 +71,16 @@ Another characteristic of a submodule, is it does not contain a `.git` folder. I
 
 ### (2) Subrepositories
 
-Subrepositories (as opposed to submodules) allow the user to implement ones own repository into the BOSS Starter Kit without having it added as a submodule. In essence, a subrepository is just a Git repository that you put inside the BOSS Starter Kit, but that you shield from being commited by adding its relative path to the [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore) file of the Starter Kit. As such, other users of the Starter Kit will not be able to download your subrepository as a submodule, but can only see its existence in [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore).
+Packages that are only used by you or by a specific analysis group within BESIII should not be accessible as a submodule and therefore need to be added by the [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore) of the Starter Kit. If such a package happens to be a repository in itself, we call it a *subrepository*. Other users of the Starter Kit will not be able to download your subrepository as a submodule, but can only see its existence in [`.gitignore`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.gitignore).
 
-If you have a cloned a repository within this repository that you do not want to track as a submodule, first add it to the `.gitignore` file, then use `git update-index --assume-unchanged <relative path to subrepository>`. You should use the latter command for the `cmt` folders as well if you do not want the setup files in there to be commited after you used `cmt config` (which will write your user name to those files).
-
-If you navigate inside a subrepository, you can just use Git the way you are used to: `git` commands apply to the subrepository and not to the overarching BOSS Starter Kit repository.
+If you navigate inside a subrepository, you can just use Git the way you are used to: `git` commands apply to the subrepository and not to the overarching BOSS Starter Kit repository. The same goes for real submodules.
 
 ### Some useful information on submodules
 - [Git submodules on Git SCM](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 - [Git submodules Git Wiki](https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial)
 - [Working with Git templates](https://git-template.readthedocs.io/en/latest/) (this is a different feature, but the template module has been considered for the Starter Kit)
 
-<!-- test test test -->
+
+## Tips for CMT and Git
+
+- After you run `cmt config` the `cmt` folder of a package, CMT will update the paths in the `setup` and `cleanup` scripts. We do not want to have these changes appear constantly when using `git status`, but we do want these scripts to be available in the repository. It is therefore best practice to add the `cmt` folder to `.gitignore` and to force add (`git add -f`) these files once. CMT will then modify these files again, but you can completely stop these files from being indexed again by using `git update-index --assume-unchanged <setup.sh or cleanup.sh>`. You can also use the command `gitignorecmt` [provided by the Starter Kit](https://github.com/redeboer/BOSS_StarterKit/blob/c0a132c175af944751ca038b5cf7fc621e1c5180/setup/Functions.sh#L549).
