@@ -1,5 +1,6 @@
 # Submodules that should not be added
 workarea/Analysis/Physics/JpsiToDPV
+workarea/Analysis/Physics/RostamTest
 workarea/TestRelease
 
 # Windows files
