@@ -1,5 +1,7 @@
 # Submodules that should not be added
+workarea/Analysis/Physics/RhopiAlg/
 workarea/Analysis/Physics/JpsiToDPV
+workarea/Analysis/Physics/PsiPrime
 workarea/Analysis/Physics/RostamTest
 workarea/TestRelease
 

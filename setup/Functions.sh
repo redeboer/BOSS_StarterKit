@@ -149,6 +149,12 @@
 		fi
 		mkdir -p "${BOSSINSTALL}/workarea/${packageName}"
 		cp -R "${BesArea}/${packageName}/"* "${BOSSINSTALL}/workarea/${packageName}"
+		reloadstarterkit
+		echo "Package installed under:"
+		echo "  ${BOSSINSTALL}/workarea/${packageName}"
+		echo "Consider adding path:"
+		echo "  workarea/${packageName}"
+		echo "to .gitignore"
 		cd "${currentPath}"
 	}
 
