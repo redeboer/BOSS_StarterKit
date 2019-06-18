@@ -5,6 +5,9 @@ workarea/Analysis/Physics/PsiPrime
 workarea/Analysis/Physics/RostamTest
 workarea/TestRelease
 
+# BOSS Starter Kit
+output
+
 # Windows files
 desktop.ini
 

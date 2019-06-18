@@ -2,8 +2,8 @@
 
 export BOSS_StarterKit_OutputDir="${BOSS_StarterKit}/output"
 
-for i in $(find "${BOSS_StarterKit}/workarea" -type f -wholename "*/setup.sh"); do
-  [[ ! "${i}" =~ /cmt/ ]] && source "${i}"
+for i in $(find "${BOSS_StarterKit}" -type f -wholename "${BOSS_StarterKit}/*/setup.sh"); do
+  [[ ! "${i}" =~ /cmt/ ]] && [[ ! "${i}" =~ /cmthome/ ]] && source "${i}"
 done
 
 if [[ $(command -v cmt) != "" ]]; then

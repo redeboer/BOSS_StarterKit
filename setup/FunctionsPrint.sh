@@ -19,6 +19,13 @@ function PrintError()
 export PrintError
 
 
+function PrintWarning()
+{
+	echo -e "\e[33;1mWARNING\e[0m\e[33m: ${1}\e[0m"
+}
+export PrintWarning
+
+
 function PrintSuccess()
 {
 	echo -e "\e[32m${1}\e[0m"
@@ -28,9 +35,13 @@ export PrintSuccess
 
 function AskForInput()
 {
-	echo -e "\e[33m${1}\e[0m"
-	echo -e "\e[33mPress ENTER to continue or break with Ctrl+C or Ctrl+Z\e[0m"
-	read -p ""
+	printf "\e[33m"
+	read -p "${1} (y/n) " -n 1 -r
+	echo -e "\e[0m"
+	input=$REPLY
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+		return 1
+	fi
 }
 export AskForInput
 

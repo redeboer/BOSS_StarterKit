@@ -10,7 +10,7 @@
 		local subfolder="${1:-}"
 		cd "${BOSS_StarterKit}/${subfolder}"
 	}
-	export cdstarterpack
+	export cdstarterkit
 	function cdbesfs()
 	{
 		local subfolder="${1:-}"
@@ -43,8 +43,3 @@
 # * ======================= * #
 
 	alias cdroot="cd ${IHEPROOT}"
-
-	alias myjobs="hep_q -u ${USER}"
-	alias alljobs="hep_q | less"
-
-	alias cdjobs="cdstarterkit jobs"
