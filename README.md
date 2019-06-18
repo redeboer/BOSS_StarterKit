@@ -23,7 +23,7 @@ You have now downloaded the main ingredients of the Starter Kit. The BOSS enviro
 - Navigate quickly to your own packages through the command `cd<package name in lowercase>`.
 - A [collection of `bash` functions](https://github.com/redeboer/BOSS_StarterKit/blob/master/setup/Functions.sh) that are useful when working with CMT and BOSS.
 - A handy `bash` script that allows you to [quickly set up a BOSS environment elsewhere](https://github.com/redeboer/BOSS_StarterKit/blob/master/utilities/SetupBoss.sh) of whatever BOSS version you choose. If you do not want to use the Starter Kit, you can run it without cloning using `wget https://raw.githubusercontent.com/redeboer/BOSS_StarterKit/master/utilities/SetupBoss.sh; bash SetupBoss.sh`.
-- Automatically standardise the layout of your C++ code using [`clang-format -i <path to some file or directory>`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.clang-format).
+- Automatically standardise the layout of your C++ code using [`clang-format -i <path to some file or directory>`](https://github.com/redeboer/BOSS_StarterKit/blob/master/.clang-format). You analyse all `C++` files recursively over any folder using `RunClang`.
 - Generate Doxygen class documentation for all your packages through [`doxygen Doxyfile`](https://github.com/redeboer/BOSS_StarterKit/blob/master/Doxyfile).
 
 
