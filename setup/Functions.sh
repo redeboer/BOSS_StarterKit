@@ -468,20 +468,23 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 
 	function RunClang()
 	{
-		local pathToFormat="."
-		local ExtensionsToFormat=( C cpp cxx h hpp )
-		if [[ ${#} == 1 ]]; then
-			pathToFormat="${1}"
-			if [[ ! -d "${pathToFormat}" ]]; then
-				PrintError "Path \"${pathToFormat}\" does not exist"
-				return 1
-			fi
+		local pathToFormat="${1:-.}"
+		if [[ ! -d "${pathToFormat}" ]]; then
+			PrintError "Path \"${pathToFormat}\" does not exist"
+			return 1
 		fi
-		cd "$(pwd)"
+		local clangfile="${BOSS_StarterKit}/.clang-format"
+		if [[ ! -f "${clangfile}" ]]; then
+			PrintError "Clang file \"${clangfile}\" does not exist"
+			return 1
+		fi
+		local ExtensionsToFormat=( C cpp cxx h hpp )
+		echo "Will run clan format over extensions ${ExtensionsToFormat[@]}"
 		for ext in ${ExtensionsToFormat[@]}; do
-			clang-format -i $(find ${pathToFormat} -type f -iname "*.${ext}")
+			nfiles=$(find ${pathToFormat} -type f -iname "*.${ext}" | wc -l)
+			echo "  Running clang-format over $nfiles $ext files..."
+			[[ $nfiles -gt 0 ]] && clang-format -assume-filename="${clangfile}" -i $(find ${pathToFormat} -type f -iname "*.${ext}")
 		done
-		cd - > /dev/null
 	}
 	export RunClang
 
