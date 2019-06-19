@@ -1,8 +1,7 @@
 # Submodules that should not be added
-workarea/Analysis/Physics/RhopiAlg/
 workarea/Analysis/Physics/JpsiToDPV
-workarea/Analysis/Physics/PsiPrime
 workarea/Analysis/Physics/RostamTest
+workarea/Analysis/Physics/rhopi_pipigg
 workarea/TestRelease
 
 # BOSS Starter Kit
@@ -55,7 +54,16 @@ extLibs/**/**
 *.tmp
 
 # CMT files
-cmt
+**/cmt/cleanup.*
+**/cmt/setup.*
+*/*/*/*/*/cmt/cleanup.*
+*/*/*/*/*/cmt/setup.*
+*/*/*/*/cmt/cleanup.*
+*/*/*/*/cmt/setup.*
+*/*/*/cmt/cleanup.*
+*/*/*/cmt/setup.*
+*/*/cmt/cleanup.*
+*/*/cmt/setup.*
 **.cmtref
 **.fferr
 **.ffwarn
