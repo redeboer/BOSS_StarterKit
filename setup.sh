@@ -1,4 +1,4 @@
-currentPath="$(pwd)"
+currentPath1="$(pwd)"
 scriptPath="$( dirname "${BASH_SOURCE[0]}" )"
 cd "${scriptPath}"
 
@@ -14,4 +14,4 @@ source "setup/Functions.sh"
 source "setup/LoadStarterKit.sh"
 source "setup/Aliases.sh"
 
-cd "${currentPath}"
+cd "${currentPath1}"

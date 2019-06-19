@@ -483,7 +483,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		for ext in ${ExtensionsToFormat[@]}; do
 			nfiles=$(find ${pathToFormat} -type f -iname "*.${ext}" | wc -l)
 			echo "  Running clang-format over $nfiles $ext files..."
-			[[ $nfiles -gt 0 ]] && clang-format -assume-filename="${clangfile}" -i $(find ${pathToFormat} -type f -iname "*.${ext}")
+			[[ $nfiles -gt 0 ]] && clang-format -style=file -assume-filename="${clangfile}" -i $(find ${pathToFormat} -type f -iname "*.${ext}")
 		done
 	}
 	export RunClang
