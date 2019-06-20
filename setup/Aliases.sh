@@ -32,7 +32,7 @@
 	function cdworkarea()
 	{
 		local subfolder="${1:-}"
-		cd "${BOSSINSTALL}/workarea/${subfolder}"
+		cd "${BOSS_StarterKit}/workarea/${subfolder}"
 	}
 	export cdworkarea
 
