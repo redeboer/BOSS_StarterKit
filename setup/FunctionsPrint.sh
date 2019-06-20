@@ -1,5 +1,5 @@
 #!/bin/bash -
-# echo "Loading \"${BASH_SOURCE[0]/$(dirname ${BOSS_StarterPack})\/}\""
+# echo "Loading \"${BASH_SOURCE[0]}\""
 
 # * ============================================================================= * #
 # *   DESCRIPTION: Shell script that contains definitions of functions that are   * #
