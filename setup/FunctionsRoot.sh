@@ -1,7 +1,7 @@
 #!/bin/bash -
 
 function rtcompile () {
-  g++ "$1" -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -o "${1/.*/.o}"
+  g++ "$1" -std=c++0x -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -o "${1/.*/.o}"
 }
 function rtcompilerun () {
   rtcompile "$1"
@@ -10,7 +10,7 @@ function rtcompilerun () {
   fi
 }
 function rtdebugcompile () {
-  g++ "$1" -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -fsanitize=address -g -o "${1/.*/.o}"
+  g++ "$1" -std=c++0x -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -fsanitize=address -o "${1/.*/.o}"
 }
 function rtdebugcompilerun () {
   rtdebugcompile "$1"
