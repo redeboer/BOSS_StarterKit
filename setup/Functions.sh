@@ -31,6 +31,91 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 
 
 
+# * =================== * #
+# * ------- GIT ------- * #
+# * =================== * #
+
+
+	function gitsync()
+	{
+		# * Go to BOSS Afterburner main dir
+		local mainDir="${BOSS_StarterKit}"
+		cd ${mainDir}
+		if [ $? != 0 ]; then
+			PrintError "Folder \"${mainDir}\" does not exist\" [${FUNCNAME[0]}]"
+			cd - > /dev/null
+			return 1
+		fi
+		# * Add all (!) files (can only be done from main folder)
+		git add --all .
+		if [ $? != 0 ]; then
+			PrintError "Failed to \"add -all .\""
+			cd - > /dev/null
+			return 1
+		fi
+		# * Commit with a default description (randomiser to make unique)
+		git commit -m "updated ($RANDOM)"
+		if [ $? != 0 ]; then
+			PrintError "Failed to \"git commit -m ()\""
+			cd - > /dev/null
+			return 1
+		else
+			PrintSuccess "Successfully added and commited changes"
+		fi
+		# * Pull possible new changes and rebase
+		git pull --rebase
+		if [ $? != 0 ]; then
+			PrintError "Failed to \"git pull --rebase\""
+			cd - > /dev/null
+			return 1
+		else
+			PrintSuccess "Successfully pulled from GitHub"
+		fi
+		# * Push to Git #
+		git push
+		if [ $? == 0 ]; then
+			PrintSuccess "Successfully pushed changes to to GitHub!"
+		fi
+		cd - > /dev/null
+	}
+	export gitsync
+
+
+	function gitsubmodules()
+	{
+		local listOfSubmodules=$(find */ -type f -iname ".git")
+		local listOfSubrepos=$(find */ -type d -iname ".git")
+		if [[ ${#listOfSubmodules} -gt 1 ]]; then
+			echo -e "This directory contains \e[1m$(echo ${listOfSubmodules} | wc -w) submodules\e[0m:"
+			for i in ${listOfSubmodules[*]}; do
+				echo " - $(basename $(dirname ${i}))"
+			done
+		fi
+		if [[ ${#listOfSubrepos} -gt 1 ]]; then
+			echo -e "This directory contains \e[1m$(echo ${listOfSubrepos} | wc -w) subrepositories\e[0m:"
+			for i in ${listOfSubrepos[*]}; do
+				echo " - $(basename $(dirname ${i}))"
+			done
+		fi
+	}
+	export gitsubmodules
+
+
+	function gitpullall()
+	{
+		git pull && git submodule foreach "git pull"
+	}
+	export gitpullall
+
+
+	function gitignorecmt()
+	{
+		git update-index --assume-unchanged cmt/*.*sh
+	}
+	export gitignorecmt
+
+
+
 # * ============================= * #
 # * ------- CMT FUNCTIONS ------- * #
 # * ============================= * #
@@ -97,6 +182,8 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 			cd "${currentPath}"
 			return 1
 		fi
+		cd ..
+		gitignorecmt
 		cd "${currentPath}"
 	}
 	export cmtconfig
@@ -372,91 +459,6 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		IniTest UnitTester > /dev/null
 	}
 	export IniUnitTester
-
-
-
-# * =================== * #
-# * ------- GIT ------- * #
-# * =================== * #
-
-
-	function gitsync()
-	{
-		# * Go to BOSS Afterburner main dir
-		local mainDir="${BOSS_StarterKit}"
-		cd ${mainDir}
-		if [ $? != 0 ]; then
-			PrintError "Folder \"${mainDir}\" does not exist\" [${FUNCNAME[0]}]"
-			cd - > /dev/null
-			return 1
-		fi
-		# * Add all (!) files (can only be done from main folder)
-		git add --all .
-		if [ $? != 0 ]; then
-			PrintError "Failed to \"add -all .\""
-			cd - > /dev/null
-			return 1
-		fi
-		# * Commit with a default description (randomiser to make unique)
-		git commit -m "updated ($RANDOM)"
-		if [ $? != 0 ]; then
-			PrintError "Failed to \"git commit -m ()\""
-			cd - > /dev/null
-			return 1
-		else
-			PrintSuccess "Successfully added and commited changes"
-		fi
-		# * Pull possible new changes and rebase
-		git pull --rebase
-		if [ $? != 0 ]; then
-			PrintError "Failed to \"git pull --rebase\""
-			cd - > /dev/null
-			return 1
-		else
-			PrintSuccess "Successfully pulled from GitHub"
-		fi
-		# * Push to Git #
-		git push
-		if [ $? == 0 ]; then
-			PrintSuccess "Successfully pushed changes to to GitHub!"
-		fi
-		cd - > /dev/null
-	}
-	export gitsync
-
-
-	function gitsubmodules()
-	{
-		local listOfSubmodules=$(find */ -type f -iname ".git")
-		local listOfSubrepos=$(find */ -type d -iname ".git")
-		if [[ ${#listOfSubmodules} -gt 1 ]]; then
-			echo -e "This directory contains \e[1m$(echo ${listOfSubmodules} | wc -w) submodules\e[0m:"
-			for i in ${listOfSubmodules[*]}; do
-				echo " - $(basename $(dirname ${i}))"
-			done
-		fi
-		if [[ ${#listOfSubrepos} -gt 1 ]]; then
-			echo -e "This directory contains \e[1m$(echo ${listOfSubrepos} | wc -w) subrepositories\e[0m:"
-			for i in ${listOfSubrepos[*]}; do
-				echo " - $(basename $(dirname ${i}))"
-			done
-		fi
-	}
-	export gitsubmodules
-
-
-	function gitpullall()
-	{
-		git pull && git submodule foreach "git pull"
-	}
-	export gitpullall
-
-
-	function gitignorecmt()
-	{
-		git update-index --assume-unchanged cmt/*.*sh
-	}
-	export gitignorecmt
 
 
 
