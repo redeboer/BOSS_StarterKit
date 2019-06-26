@@ -36,6 +36,28 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 # * =================== * #
 
 
+	function gitsub()
+	{
+		if [[ $# == 0 ]]; then
+			git
+			return 1
+		fi
+		local currentPath="$(pwd)"
+		for repo in $(find */ -type d -name .git); do
+			local dir="$(dirname "${repo}")"
+			cd "$(dirname "${repo}")"
+			local repoName=$(basename $(git config --get remote.origin.url) )
+			local repoName=${repoName/.git}
+			PrintHeader "Repository \"${repoName}\" (${dir})"
+			PrintBold "git $*"
+			git $*
+			cd "${currentPath}"
+		done
+		echo; echo
+	}
+	export gitsub
+
+
 	function gitsync()
 	{
 		# * Go to BOSS Afterburner main dir
