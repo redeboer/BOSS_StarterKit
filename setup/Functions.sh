@@ -51,6 +51,10 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 			PrintHeader "Repository \"${repoName}\" (${dir})"
 			PrintBold "git $*"
 			git $*
+			if [[ $? != 0 ]]; then
+				cd "${currentPath}"
+				return 1
+			fi
 			cd "${currentPath}"
 		done
 	}
