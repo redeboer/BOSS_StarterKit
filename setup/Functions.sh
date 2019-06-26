@@ -341,6 +341,42 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	export CreateOrEmptyDirectory
 
 
+	function SearchFileContent()
+	{
+		local search=${1}
+		local folder=${2:-.}
+		local ext="${3:-*}"
+		for file in $(find ${folder} -type f -iname "*.${ext}"); do
+			for line in $(cat ${file}); do
+				if [[ "${line}" =~ "${search}" ]]; then
+					echo "${file}"
+					break
+				fi
+			done
+		done
+	}
+	export SearchFileContent
+
+
+	function FindAndReplaceFileContent()
+	{
+		local search=${1}
+		local replace=${2}
+		local folder=${3:-.}
+		local ext="${4:-*}"
+		local nhits=$(SearchFileContent ${search} ${folder} ${ext} | wc -l)
+		if [[ $nhits == 0 ]]; then
+			PrintSuccess "No occurrences of \"${search}\" in files with extention \"${ext}\" folder \"${folder}\""
+			return 0
+		fi
+		AskForInput "Replace all occurrences of \"${search}\" by \"${replace}\" in ${nhits} files?"
+		[[ $? != 0 ]] && return 1
+		for file in $(find ${folder} -type f -iname "*.${ext}"); do
+			sed -i 's/'${search}'/'${replace}'/g' "${file}"
+		done
+	}
+	export FindAndReplaceFileContent
+
 
 # * ======================================= * #
 # * ------- SCRIPT ACCESS FUNCTIONS ------- * #
