@@ -43,7 +43,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 			return 1
 		fi
 		local currentPath="$(pwd)"
-		for repo in $(find */ -type d -name .git); do
+		for repo in $(find */ -name .git); do
 			local dir="$(dirname "${repo}")"
 			cd "$(dirname "${repo}")"
 			local repoName=$(basename $(git config --get remote.origin.url) )
@@ -53,9 +53,22 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 			git $*
 			cd "${currentPath}"
 		done
-		echo; echo
 	}
 	export gitsub
+
+
+	function gitall()
+	{
+		gitsub $*
+		if [[ $? == 0 ]]; then
+			local repoName=$(basename $(git config --get remote.origin.url) )
+			local repoName=${repoName/.git}
+			PrintHeader "======= MAIN REPOSITORY \"${repoName}\" ======="
+			PrintBold "git $*"
+			git $*
+		fi
+	}
+	export gitall
 
 
 	function gitsync()
