@@ -6,6 +6,7 @@ workarea/TestRelease
 
 # BOSS Starter Kit
 output
+setup/BOSSVERSION
 
 # Windows files
 desktop.ini

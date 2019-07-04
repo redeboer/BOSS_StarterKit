@@ -23,11 +23,11 @@ path_append CMTPATH "$(LCG_release_area)/LCGCMT_$(LCGCMTVERS)"
 
 # Set release number
 macro GAUDI_RELEASE "GAUDI_v23r9"
-# Set the location of Gaudi 
+# Set the location of GaudiUSE
 macro GaudiArea "$(EXTERNALLIBDIR)/gaudi/$(GAUDI_RELEASE)"
 #macro GaudiArea "$(SITEROOT)/ExternalLib/Gaudi/$(GAUDI_RELEASE)"
 # Setup the CMT search path
-path_remove CMTPATH  "/gaudi/" 
+path_remove CMTPATH  "/gaudi/"
 path_prepend CMTPATH "$(GaudiArea)"
 
 
@@ -37,7 +37,7 @@ macro BES_DIST_AREA "${SITETOPROOT}/Boss"
 set BES_RELEASE "${BOSSVERSION}"
 # Setup the CMT search path
 set BesArea "$(BES_DIST_AREA)/$(BES_RELEASE)"
-path_remove CMTPATH  "${BesArea}" 
+path_remove CMTPATH  "${BesArea}"
 path_prepend CMTPATH "${BesArea}"
 
 #Add your worarea to CMTPATH
