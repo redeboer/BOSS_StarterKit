@@ -11,7 +11,7 @@
 # To see which options are used by default, see: https://root.cern.ch/building-root
 
 # * Script parameters * #
-buildDir="compile"
+buildDir=".build"
 function AttemptToRun()
 {
   $@
