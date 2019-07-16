@@ -80,15 +80,19 @@ if [[ -d "${sourceDir}" ]]; then
       fi
       mkdir -p "${sourceDir}/${buildDir}"
       AttemptToRun \
+        git checkout master
+      AttemptToRun \
+        git reset --hard
+      AttemptToRun \
         git pull origin master
     fi
     cd "${currentPath}"
   fi
 else
+  chown -R $(whoami):$(id -g -n $(whoami)) "${sourceDir}"
   AttemptToRun \
     git clone http://github.com/root-project/root.git "${sourceDir}"
 fi
-chown -Rf $USER "${sourceDir}"
 echo
 
 # Install prerequisites (https://root.cern.ch/build-prerequisites)
@@ -122,13 +126,12 @@ sudo apt update
 echo
 
 # Change ownership
-AttemptToRun \
-  chown -R $(whoami):$(id -g -n $(whoami)) "${sourceDir}"
 cd "${sourceDir}"
 
 # Set the correct release tag
 echo -e "\e[1mChecking out chosen version tag...\e[0m"
 git checkout master
+git reset --hard
 git fetch --all
 git branch -D v6-$ROOTVERSION
 git checkout -b v6-$ROOTVERSION v6-$ROOTVERSION
@@ -145,6 +148,8 @@ echo
 echo -e "\e[1mPerforming CMAKE...\e[0m"
 mkdir -p "${sourceDir}/${buildDir}"
 cd "${sourceDir}/${buildDir}"
+sudo mkdir -p "${installDir}"
+sudo chown -R $(whoami):$(id -g -n $(whoami)) "${installDir}"
 cmake \
   -Dminuit2=ON \
   -Dminuit=ON \
@@ -166,7 +171,7 @@ echo
 
 # Remove build files
 cd "${installDir}"
-rm -rf "${installDir}/${buildDir}"
+# rm -rf "${installDir}/${buildDir}"
 
 # Install ROOT: tell Ubuntu how to run ROOT
 AttemptToRun \
