@@ -1,14 +1,19 @@
 #!/bin/bash -
 # echo "Loading \"${BASH_SOURCE[0]/$(dirname ${BOSS_StarterKit})\/}\""
 BesAreaTemp="/afs/ihep.ac.cn/bes3/offline/Boss"
+defaultVersion="7.0.4"
 
 # * BOSS paths and parameters * #
-BOSSversionFile="$(dirname ${BASH_SOURCE[0]})/BOSSVERSION"
+currentPath9="$(pwd)"
+BOSSversionFile="$(dirname ${BASH_SOURCE[0]})"
+cd "${BOSSversionFile}"
+BOSSversionFile="$(pwd)/BOSSVERSION"
 if [[ -f "${BOSSversionFile}" ]]; then
   BOSSVERSION=$(head -n 1 "${BOSSversionFile}")
 else
+  cd $BesAreaTemp
   echo "It seems this is the first time you load BOSS."
-  read -p "Which version do you want to load? (default: 7.0.4) " BOSSVERSION
+  read -e -p "Which version do you want to load? " -i $defaultVersion BOSSVERSION
   echo
   echo "Will load version ${BOSSVERSION} from now on. Change file"
   echo "  ${BOSSversionFile}"
@@ -22,6 +27,8 @@ if [[ ! -d "${BesAreaTemp}/${BOSSVERSION}" ]]; then
   echo "  ${BesArea}"
   exit 1
 fi
+cd "${currentPath9}"
+
 export BOSSVERSION
 export CMTHOMENAME="cmthome"
 export WORKAREANAME="workarea"
