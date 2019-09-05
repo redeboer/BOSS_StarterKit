@@ -62,9 +62,9 @@ function FetchCLHEP()
   # * Determine version location
   mkdir -p "${targetDir}/CLHEP/"
   cd "${targetDir}/CLHEP/"
-  rm -rf "include"
+  rm -rf CLHEP
   echo "Copying \"${versionPath}\"..."
-  cp -Rf "${extLibs}/external/${versionPath}/include" .
+  cp -Rf "${extLibs}/external/${versionPath}/include/CLHEP" .
   cd "${currentPath}"
 }
 FetchCLHEP
