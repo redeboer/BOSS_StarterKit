@@ -80,21 +80,21 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		# * Go to BOSS Afterburner main dir
 		local mainDir="${BOSS_StarterKit}"
 		cd ${mainDir}
-		if [ $? != 0 ]; then
+		if [[ $? != 0 ]]; then
 			PrintError "Folder \"${mainDir}\" does not exist\" [${FUNCNAME[0]}]"
 			cd - > /dev/null
 			return 1
 		fi
 		# * Add all (!) files (can only be done from main folder)
 		git add --all .
-		if [ $? != 0 ]; then
+		if [[ $? != 0 ]]; then
 			PrintError "Failed to \"add -all .\""
 			cd - > /dev/null
 			return 1
 		fi
 		# * Commit with a default description (randomiser to make unique)
 		git commit -m "updated ($RANDOM)"
-		if [ $? != 0 ]; then
+		if [[ $? != 0 ]]; then
 			PrintError "Failed to \"git commit -m ()\""
 			cd - > /dev/null
 			return 1
@@ -103,7 +103,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		fi
 		# * Pull possible new changes and rebase
 		git pull --rebase
-		if [ $? != 0 ]; then
+		if [[ $? != 0 ]]; then
 			PrintError "Failed to \"git pull --rebase\""
 			cd - > /dev/null
 			return 1
@@ -112,7 +112,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		fi
 		# * Push to Git #
 		git push
-		if [ $? == 0 ]; then
+		if [[ $? == 0 ]]; then
 			PrintSuccess "Successfully pushed changes to to GitHub!"
 		fi
 		cd - > /dev/null
@@ -149,7 +149,12 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 
 	function gitignorecmt()
 	{
-		git update-index --assume-unchanged cmt/*.*sh
+		local folders=$(find . -type d -iname "cmt")
+		for folder in ${folders[@]}; do
+			echo "Git will ignore files \"${folder}\""
+			git update-index --assume-unchanged ${folder}/*.sh
+			git update-index --assume-unchanged ${folder}/*.csh
+		done
 	}
 	export gitignorecmt
 
@@ -166,7 +171,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		local commandToExecute="${1}"
 		PrintBold "\n--== EXECUTING \"${commandToExecute}\" ==--\n"
 		${commandToExecute}
-		if [ $? != 0 ]; then
+		if [[ $? != 0 ]]; then
 			PrintError "Failed to execute \"${commandToExecute}\""
 			cd "${currentPath}"
 			return 1
@@ -179,9 +184,9 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function cdcmt()
 	{
 		local currentPath="$(pwd)"
-		if [ "$(basename "${currentPath}")" != "cmt" ]; then
+		if [[ "$(basename "${currentPath}")" != "cmt" ]]; then
 			local cmtFolder="$(find -name cmt | head -1)"
-			if [ "${cmtFolder}" == "" ]; then
+			if [[ "${cmtFolder}" == "" ]]; then
 				PrintError "No cmt folder available!"
 				return 1
 			fi
@@ -194,17 +199,31 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function cmtbroadcast()
 	{
 		local currentPath="$(pwd)"
-		cdcmt && \
-		PrintHeader "BROADCASTING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
-		AttemptToExecute "cmt broadcast" && \
-		AttemptToExecute "cmt config" && \
-		AttemptToExecute "cmt broadcast make" && \
-		AttemptToExecute "source setup.sh"
-		if [[ $? != 0 ]]; then
-			cd "${currentPath}"
-			return 1
+		# When running from a cmt folder
+		if [[ "$(basename "${currentPath}")" == "cmt" ]]; then
+			echo "henk"
+			local folders="${currentPath}"
+		# When running from an encapsulating folder
+		else
+			local folders=$(find . -type d -iname "cmt")
 		fi
-		cd "${currentPath}"
+		# Execute cmt config chain
+		for folder in ${folders[@]}; do
+			cd "${folder}" && \
+			PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
+			AttemptToExecute "cmt broadcast" && \
+			AttemptToExecute "cmt config" && \
+			AttemptToExecute "make" && \
+			AttemptToExecute "cmt broadcast make" && \
+			AttemptToExecute "source setup.sh"
+			if [[ $? != 0 ]]; then
+				cd "${currentPath}"
+				return 1
+			fi
+			cd ..
+			gitignorecmt
+			cd "${currentPath}"
+		done
 	}
 	export cmtbroadcast
 
@@ -212,18 +231,29 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function cmtconfig()
 	{
 		local currentPath="$(pwd)"
-		cdcmt && \
-		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
-		AttemptToExecute "cmt config" && \
-		AttemptToExecute "make" && \
-		AttemptToExecute "source setup.sh"
-		if [[ $? != 0 ]]; then
-			cd "${currentPath}"
-			return 1
+		# When running from a cmt folder
+		if [[ "$(basename "${currentPath}")" == "cmt" ]]; then
+			echo "henk"
+			local folders="${currentPath}"
+		# When running from an encapsulating folder
+		else
+			local folders=$(find . -type d -iname "cmt")
 		fi
-		cd ..
-		gitignorecmt
-		cd "${currentPath}"
+		# Execute cmt config chain
+		for folder in ${folders[@]}; do
+			cd "${folder}" && \
+			PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
+			AttemptToExecute "cmt config" && \
+			AttemptToExecute "make" && \
+			AttemptToExecute "source setup.sh"
+			if [[ $? != 0 ]]; then
+				cd "${currentPath}"
+				return 1
+			fi
+			cd ..
+			gitignorecmt
+			cd "${currentPath}"
+		done
 	}
 	export cmtconfig
 
@@ -231,14 +261,25 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function cmtmake()
 	{
 		local currentPath="$(pwd)"
-		cdcmt && \
-		PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
-		AttemptToExecute "make"
-		if [[ $? != 0 ]]; then
-			cd "${currentPath}"
-			return 1
+		# When running from a cmt folder
+		if [[ "$(basename "${currentPath}")" == "cmt" ]]; then
+			echo "henk"
+			local folders="${currentPath}"
+		# When running from an encapsulating folder
+		else
+			local folders=$(find . -type d -iname "cmt")
 		fi
-		cd "${currentPath}"
+		# Execute cmt config chain
+		for folder in ${folders[@]}; do
+			cd "${folder}" && \
+			PrintHeader "BUILDING PACKAGE \"$(basename $(dirname $(pwd)))\"" && \
+			AttemptToExecute "make"
+			if [[ $? != 0 ]]; then
+				cd "${currentPath}"
+				return 1
+			fi
+			cd "${currentPath}"
+		done
 	}
 	export cmtmake
 
@@ -335,7 +376,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function CheckDirectory()
 	{
 		local path="${1}"
-		if [ ! -d "${path}" ]; then
+		if [[ ! -d "${path}" ]]; then
 			PrintError "Folder \"${path}\" does not exist [${FUNCNAME[0]}]"
 			return 1
 		fi
@@ -366,9 +407,9 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		# * Import function arguments
 		local directory="${1}"
 		# * Main function: empty or mkdir
-		if [ -d "${directory}" ]; then
+		if [[ -d "${directory}" ]]; then
 			numFiles=$(find ${directory} -type f | wc -l)
-			if [ $numFiles != 0 ]; then
+			if [[ $numFiles != 0 ]]; then
 				AskForInput "Remove ${numFiles} files in \"${directory}\"?"
 				[[ $? != 0 ]] && return 1
 			fi
@@ -441,7 +482,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	# Check if the path to a folder exists. Exit the script if it doesn't.
 	{
 		local folderToMake="${1}"
-		if [ ! -d "${folderToMake}" ]; then
+		if [[ ! -d "${folderToMake}" ]]; then
 			AskForInput "Create folder the following folder?\n\"${folderToMake}\""
 			[[ $? != 0 ]] && return 1
 			mkdir -p "${folderToMake}"
@@ -453,7 +494,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function CheckIfFolderExists()
 	{
 		local folderToCheck="${1}"
-		if [ ! -d "${folderToCheck}" ]; then
+		if [[ ! -d "${folderToCheck}" ]]; then
 			PrintError "Folder \"${folderToCheck}\" does not exist [${FUNCNAME[0]}]"
 			return 1
 		fi
@@ -472,7 +513,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 	function CheckIfFileExists()
 	{
 		local fileToCheck="${1}"
-		if [ ! -s "${fileToCheck}" ]; then
+		if [[ ! -s "${fileToCheck}" ]]; then
 			PrintError "File \"${fileToCheck}\" does not exist"
 			return 1
 		fi
@@ -576,11 +617,11 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 			latexDir="latex"
 
 		# * CHECK PARAMETERS * #
-			if [ ! -d "${doxygenDir}" ]; then
+			if [[ ! -d "${doxygenDir}" ]]; then
 				echo "\e[91mThis repository does not contain a Doxygen directory (\"${doxygenDir}\")\e[0m"
 				return 1
 			fi
-			if [ ! -f "${doxygenPath}" ]; then
+			if [[ ! -f "${doxygenPath}" ]]; then
 				echo "\e[91mThis repository does not contain a Doxygen file \"${doxygenPath}\"\e[0m"
 				return 1
 			fi
@@ -594,7 +635,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 		# * WRITE DOXYGEN PAGES * #
 			echo "Writing Doxygen pages for repository $(basename $(pwd))"
 			doxygen doxygen.in
-			if [ $? == 0 ]; then
+			if [[ $? == 0 ]]; then
 				echo -e "\e[92mSuccessfully created Doxygen documentation!\e[0m" # light green color code
 			else
 				echo -e "\e[91mFailed to create Doxygen documentation!\e[0m"     # light red color code
