@@ -6,7 +6,7 @@ source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 # * ============================ *#
 currentPath="$(pwd)"
 extLibs="/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/ExternalLib"
-scratchDir="/scratchfs/bes/$USER"
+sourceDir="/afs/ihep.ac.cn/bes3/offline/Boss"
 targetDir="${BOSS_StarterKit}/ThirdParty/headers"
 
 function AbortScript()
@@ -26,44 +26,50 @@ CheckDir "${extLibs}"
 CheckDir "${targetDir}"
 
 
-# * =============== *#
-# * --== Gaudi ==-- *#
-# * =============== *#
-function FetchGaudi()
+# * ============== *#
+# * --== BOSS ==-- *#
+# * ============== *#
+function FetchBOSS()
 {
   local currentPath="$(pwd)"
-  # * Choose version
-  cd "${extLibs}/gaudi"
-  local versionsGaudi=$(find -maxdepth 4 -type d -iwholename "*/InstallArea/x86_64-slc6-gcc46-opt/include")
-  cd "${targetDir}"
-  mkdir -p "${targetDir}/versionsGaudi"
-  cd "${targetDir}/versionsGaudi"
-  rm -rf *
-  local defaultVersion="GAUDI_v23r9"
-  for v in ${versionsGaudi[@]}; do
-    echo > "$(echo "${v}" | cut -d / -f 2)"
-  done
-  read -e -p "Which version of Gaudi do you want to load? " -i $defaultVersion versionGaudi
-  cd "${targetDir}"
-  rm -rf versionsGaudi
   # * Determine version location
-  local versionPath=""
-  for v in ${versionsGaudi[@]}; do
-    if [[ "$(echo "${v}" | cut -d / -f 2)" == "${versionGaudi}" ]]; then
-      versionPath="${v}"
-      break
-    fi
-  done
-  [[ "${versionPath}" == "" ]] && AbortScript "Version ${versionGaudi} does not exist!"
-  # * Copy headers
-  mkdir -p "${targetDir}/Gaudi/"
-  cd "${targetDir}/Gaudi/"
+  mkdir -p "${targetDir}/versionsBOSS"
+  cd "${targetDir}/versionsBOSS"
   rm -rf *
-  echo "Copying \"${versionPath}\"..."
-  cp -Rf "${extLibs}/gaudi/${versionPath}/"* .
+  for v in $(ls ${sourceDir}); do
+    echo > "${v}"
+  done
+  local defaultVersion="7.0.4"
+  read -e -p "Which version of BOSS do you want to load? " -i $defaultVersion versionBOSS
+  cd "${targetDir}"
+  rm -rf versionsBOSS
+  # * Copy headers
+  rm -rf "${targetDir}/BOSS"
+  mkdir -p "${targetDir}/BOSS"
+  cd "${sourceDir}/${versionBOSS}"
+  echo "Copying headers only from BOSS version ${versionBOSS}..."
+  for package in $(find -type d -regextype posix-extended -regex "^.*/[A-Za-z0-9]+-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$"); do
+    local packageName="$(echo "$(basename $package)" | sed -e 's/-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$//g')"
+    local packageSource="${package}/${packageName}"
+    [[ ! -d "${packageSource}" ]] && continue
+    local packageTarget="$(dirname $(dirname "${packageSource}"))"
+    rm -rf "${targetDir}/BOSS/${packageTarget}"
+    mkdir -p "${targetDir}/BOSS/${packageTarget}"
+    cp -Rf "${packageSource}/"* "${targetDir}/BOSS/${packageTarget}/"
+  done
+  rm -rf $(find ${targetDir}/BOSS -type d -wholename "*/CVS")
+  # * Correct copied structure
+  # for package in $(ls); do
+  #   cd "$package"
+  #   rm "$package.cmtref"
+  #   mv "$package/"* .
+  #   { rmdir "$package"; } &> /dev/null
+  #   rm -rf "CVS"
+  #   cd ..
+  # done
   cd "${currentPath}"
 }
-FetchGaudi
+FetchBOSS
 
 
 # * =============== *#
@@ -73,7 +79,6 @@ function FetchCLHEP()
 {
   local currentPath="$(pwd)"
   # * Choose version
-  cd "${targetDir}"
   mkdir -p "${targetDir}/versionsCLHEP"
   cd "${targetDir}/versionsCLHEP"
   rm -rf *
@@ -107,3 +112,42 @@ function FetchCLHEP()
   cd "${currentPath}"
 }
 FetchCLHEP
+
+
+# * =============== *#
+# * --== Gaudi ==-- *#
+# * =============== *#
+function FetchGaudi()
+{
+  local currentPath="$(pwd)"
+  # * Choose version
+  cd "${extLibs}/gaudi"
+  local versionsGaudi=$(find -maxdepth 4 -type d -iwholename "*/InstallArea/x86_64-slc6-gcc46-opt/include")
+  mkdir -p "${targetDir}/versionsGaudi"
+  cd "${targetDir}/versionsGaudi"
+  rm -rf *
+  local defaultVersion="GAUDI_v23r9"
+  for v in ${versionsGaudi[@]}; do
+    echo > "$(echo "${v}" | cut -d / -f 2)"
+  done
+  read -e -p "Which version of Gaudi do you want to load? " -i $defaultVersion versionGaudi
+  cd "${targetDir}"
+  rm -rf versionsGaudi
+  # * Determine version location
+  local versionPath=""
+  for v in ${versionsGaudi[@]}; do
+    if [[ "$(echo "${v}" | cut -d / -f 2)" == "${versionGaudi}" ]]; then
+      versionPath="${v}"
+      break
+    fi
+  done
+  [[ "${versionPath}" == "" ]] && AbortScript "Version ${versionGaudi} does not exist!"
+  # * Copy headers
+  mkdir -p "${targetDir}/Gaudi/"
+  cd "${targetDir}/Gaudi/"
+  rm -rf *
+  echo "Copying \"${versionPath}\"..."
+  cp -Rf "${extLibs}/gaudi/${versionPath}/"* .
+  cd "${currentPath}"
+}
+FetchGaudi
