@@ -20,6 +20,10 @@ function CheckDir()
   local dirPath="${1}"
   [[ ! -d "${dirPath}" ]] && AbortScript "Target directory \"${dirPath}\" does not exist"
 }
+function AttemptCd()
+{
+  { cd ${1}; } &> /dev/null || AbortScript "Directory \"${1}\" does not exist"
+}
 
 mkdir -p "${targetDir}"
 CheckDir "${extLibs}"
@@ -34,39 +38,28 @@ function FetchBOSS()
   local currentPath="$(pwd)"
   # * Determine version location
   mkdir -p "${targetDir}/versionsBOSS"
-  cd "${targetDir}/versionsBOSS"
+  AttemptCd "${targetDir}/versionsBOSS"
   rm -rf *
   for v in $(ls ${sourceDir}); do
     echo > "${v}"
   done
   local defaultVersion="7.0.4"
   read -e -p "Which version of BOSS do you want to load? " -i $defaultVersion versionBOSS
-  cd "${targetDir}"
+  AttemptCd "${targetDir}"
   rm -rf versionsBOSS
   # * Copy headers
+  AttemptCd "${sourceDir}/${versionBOSS}/InstallArea/include"
   rm -rf "${targetDir}/BOSS"
   mkdir -p "${targetDir}/BOSS"
-  cd "${sourceDir}/${versionBOSS}"
   echo "Copying headers only from BOSS version ${versionBOSS}..."
-  for package in $(find -type d -regextype posix-extended -regex "^.*/[A-Za-z0-9]+-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$"); do
-    local packageName="$(echo "$(basename $package)" | sed -e 's/-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$//g')"
-    local packageSource="${package}/${packageName}"
-    [[ ! -d "${packageSource}" ]] && continue
-    local packageTarget="$(dirname $(dirname "${packageSource}"))"
-    rm -rf "${targetDir}/BOSS/${packageTarget}"
-    mkdir -p "${targetDir}/BOSS/${packageTarget}"
-    cp -Rf "${packageSource}/"* "${targetDir}/BOSS/${packageTarget}/"
+  for package in $(ls); do
+    cd $package
+    for header in $(find -L -type f -regextype posix-extended -regex "^.*/[A-Za-z0-9]+\.(h|hh)"); do
+      mkdir -p "${targetDir}/BOSS/$(dirname ${header})"
+      cp "${header}" "${targetDir}/BOSS/${header}"
+    done
+    cd - > /dev/null
   done
-  rm -rf $(find ${targetDir}/BOSS -type d -wholename "*/CVS")
-  # * Correct copied structure
-  # for package in $(ls); do
-  #   cd "$package"
-  #   rm "$package.cmtref"
-  #   mv "$package/"* .
-  #   { rmdir "$package"; } &> /dev/null
-  #   rm -rf "CVS"
-  #   cd ..
-  # done
   cd "${currentPath}"
 }
 FetchBOSS
