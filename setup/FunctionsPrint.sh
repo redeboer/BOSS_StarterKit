@@ -14,21 +14,21 @@
 
 function PrintError()
 {
-	echo -e "\e[31;1mERROR: ${1}\e[0m"
+	echo -e "\e[31;1mERROR: ${@}\e[0m"
 }
 export PrintError
 
 
 function PrintWarning()
 {
-	echo -e "\e[33;1mWARNING\e[0m\e[33m: ${1}\e[0m"
+	echo -e "\e[33;1mWARNING\e[0m\e[33m: ${@}\e[0m"
 }
 export PrintWarning
 
 
 function PrintSuccess()
 {
-	echo -e "\e[32m${1}\e[0m"
+	echo -e "\e[32m${@}\e[0m"
 }
 export PrintSuccess
 
@@ -36,7 +36,7 @@ export PrintSuccess
 function AskForInput()
 {
 	printf "\e[33m"
-	read -p "${1} (y/n) " -n 1 -r
+	read -p "${@} (y/n) " -n 1 -r
 	echo -e "\e[0m"
 	input=$REPLY
 	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -48,7 +48,7 @@ export AskForInput
 
 function PrintBold()
 {
-	echo -e "\e[1m${1}\e[0m"
+	echo -e "\e[1m${@}\e[0m"
 }
 export PrintBold
 

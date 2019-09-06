@@ -51,19 +51,32 @@ function FetchBOSS()
   AttemptCd "${sourceDir}/${versionBOSS}/InstallArea/include"
   rm -rf "${targetDir}/BOSS"
   mkdir -p "${targetDir}/BOSS"
-  echo "Copying headers only from BOSS version ${versionBOSS}..."
+  PrintBold "Copying headers and source files from BOSS version ${versionBOSS}..."
   for package in $(ls); do
     cd $package
-    for header in $(find -L -type f -regextype posix-extended -regex "^.*/[A-Za-z0-9]+\.(h|hh)"); do
+    for header in $(find -L -type f -regextype posix-extended -regex "^.*/[A-Za-z0-9]+\.(h|hh|icc)"); do
       mkdir -p "${targetDir}/BOSS/$(dirname ${header})"
       cp "${header}" "${targetDir}/BOSS/${header}"
     done
     cd - > /dev/null
   done
+  # * Fetch icc files from source code
+  AttemptCd "${sourceDir}/${versionBOSS}"
+  for package in $(find -L -type d -regextype posix-extended -regex "^.*/[^/]+-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$"); do
+    # Remove subdirs such as "Event"
+    local packageDir="$(dirname ${package/$(dirname $(dirname "${package}"))\/})"
+    for file in $(find $package -type f -regextype posix-extended -regex "^.*/src/.*\.(C|cc|cpp|cxx|icc)$"); do
+      local targetFile="${targetDir}/BOSS/$packageDir/${file/${package}\/src\/}"
+      mkdir -p "$(dirname "${targetFile}")"
+      cp "${file}" "${targetFile}"
+    done
+  done
+  # * Remove Gaudi dll's
+  AttemptCd "${targetDir}/BOSS"
+  rm -rf $(find -type f -regextype posix-extended -iregex ".*/(components|dll)/[^/]*(load|dll|entries)[^/]*$")
   cd "${currentPath}"
 }
 FetchBOSS
-
 
 # * =============== *#
 # * --== CLHEP ==-- *#
@@ -100,7 +113,7 @@ function FetchCLHEP()
   mkdir -p "${targetDir}/CLHEP/"
   cd "${targetDir}/CLHEP/"
   rm -rf CLHEP
-  echo "Copying \"${versionPath}\"..."
+  PrintBold "Copying \"${versionPath}\"..."
   cp -Rf "${extLibs}/external/${versionPath}/include/CLHEP" .
   cd "${currentPath}"
 }
@@ -139,7 +152,7 @@ function FetchGaudi()
   mkdir -p "${targetDir}/Gaudi/"
   cd "${targetDir}/Gaudi/"
   rm -rf *
-  echo "Copying \"${versionPath}\"..."
+  PrintBold "Copying \"${versionPath}\"..."
   cp -Rf "${extLibs}/gaudi/${versionPath}/"* .
   cd "${currentPath}"
 }
