@@ -10,3 +10,9 @@
 [submodule "ThirdParty/headers"]
 	path = ThirdParty/headers
 	url = https://github.com/redeboer/BOSS_ExternalLibs
+[submodule "ThirdParty/BOSS704/CLHEP"]
+	path = ThirdParty/BOSS704/CLHEP
+	url = https://gitlab.cern.ch/CLHEP/CLHEP.git
+[submodule "ThirdParty/BOSS704/Gaudi"]
+	path = ThirdParty/BOSS704/Gaudi
+	url = https://gitlab.cern.ch/gaudi/Gaudi.git
