@@ -1,9 +1,9 @@
 source "${BOSS_StarterKit}/setup/FunctionsPrint.sh"
 
 
-# * ============================ *#
-# * --== General parameters ==-- *#
-# * ============================ *#
+# * ============================ * #
+# * --== General parameters ==-- * #
+# * ============================ * #
 currentPath="$(pwd)"
 extLibs="/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/ExternalLib"
 sourceDir="/afs/ihep.ac.cn/bes3/offline/Boss"
@@ -30,9 +30,9 @@ CheckDir "${extLibs}"
 CheckDir "${targetDir}"
 
 
-# * ============== *#
-# * --== BOSS ==-- *#
-# * ============== *#
+# * ============== * #
+# * --== BOSS ==-- * #
+# * ============== * #
 function FetchBOSS()
 {
   local currentPath="$(pwd)"
@@ -76,11 +76,11 @@ function FetchBOSS()
   rm -rf $(find -type f -regextype posix-extended -iregex ".*/(components|dll)/[^/]*(load|dll|entries)[^/]*$")
   cd "${currentPath}"
 }
-FetchBOSS
+# FetchBOSS
 
-# * =============== *#
-# * --== CLHEP ==-- *#
-# * =============== *#
+# * =============== * #
+# * --== CLHEP ==-- * #
+# * =============== * #
 function FetchCLHEP()
 {
   local currentPath="$(pwd)"
@@ -117,12 +117,12 @@ function FetchCLHEP()
   cp -Rf "${extLibs}/external/${versionPath}/include/CLHEP" .
   cd "${currentPath}"
 }
-FetchCLHEP
+# FetchCLHEP
 
 
-# * =============== *#
-# * --== Gaudi ==-- *#
-# * =============== *#
+# * =============== * #
+# * --== Gaudi ==-- * #
+# * =============== * #
 function FetchGaudi()
 {
   local currentPath="$(pwd)"
@@ -156,12 +156,12 @@ function FetchGaudi()
   cp -Rf "${extLibs}/gaudi/${versionPath}/"* .
   cd "${currentPath}"
 }
-FetchGaudi
+# FetchGaudi
 
 
-# * =============== *#
-# * --== Geant4 ==-- *#
-# * =============== *#
+# * ================ * #
+# * --== Geant4 ==-- * #
+# * ================ * #
 function FetchGeant4()
 {
   local additionalPath="${extLibs}/external/BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include"
@@ -173,7 +173,7 @@ function FetchGeant4()
     cp -Rf "${additionalPath}/G4Binding/${folder}/${folder}" "${targetDir}/geant4"
   done
   # * Copy separate hh files
-  local extensions=(h hh)
+  local extensions=(h hh icc)
   for ext in ${extensions[@]}; do
     cp ${extLibs}/external/geant4/4.9.3p01/x86_64-slc6-gcc46-opt/include/*.$ext "${targetDir}/geant4"
   done
@@ -181,9 +181,9 @@ function FetchGeant4()
 FetchGeant4
 
 
-# * ==================== *#
-# * --== Additional ==-- *#
-# * ==================== *#
+# * ==================== * #
+# * --== Additional ==-- * #
+# * ==================== * #
 function FetchAdditional()
 {
   local additionalPath="${extLibs}/external"
@@ -198,4 +198,4 @@ function FetchAdditional()
     cp -Rf "${additionalPath}/$i" "${targetDir}/Additional"
   done
 }
-FetchAdditional
+# FetchAdditional
