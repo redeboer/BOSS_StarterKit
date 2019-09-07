@@ -1,7 +1,0 @@
-# Temporary files
-*.cache
-*.swp
-
-# # Visual Studio Code
-.vscode/
-*.code-workspace
