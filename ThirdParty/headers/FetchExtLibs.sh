@@ -76,7 +76,7 @@ function FetchBOSS()
   rm -rf $(find -type f -regextype posix-extended -iregex ".*/(components|dll)/[^/]*(load|dll|entries)[^/]*$")
   cd "${currentPath}"
 }
-# FetchBOSS
+FetchBOSS
 
 # * =============== * #
 # * --== CLHEP ==-- * #
@@ -117,7 +117,7 @@ function FetchCLHEP()
   cp -Rf "${extLibs}/external/${versionPath}/include/CLHEP" .
   cd "${currentPath}"
 }
-# FetchCLHEP
+FetchCLHEP
 
 
 # * =============== * #
@@ -156,7 +156,7 @@ function FetchGaudi()
   cp -Rf "${extLibs}/gaudi/${versionPath}/"* .
   cd "${currentPath}"
 }
-# FetchGaudi
+FetchGaudi
 
 
 # * ================ * #
@@ -189,13 +189,14 @@ function FetchAdditional()
   local additionalPath="${extLibs}/external"
   rm -rf "${targetDir}/Additional"
   mkdir -p "${targetDir}/Additional"
-  PrintBold "Copying Saxana and Reflex headers..."
+  PrintBold "Copying Saxana, Schema and Reflex headers..."
   toCopy=(
     "BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include/Common/Saxana/Saxana"
+    "BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include/Common/Schema/Schema"
     "ROOT/5.34.09/x86_64-slc6-gcc46-opt/root/include/Reflex"
   )
   for i in ${toCopy[@]}; do
     cp -Rf "${additionalPath}/$i" "${targetDir}/Additional"
   done
 }
-# FetchAdditional
+FetchAdditional
