@@ -165,27 +165,34 @@ FetchGaudi
 function FetchGeant4()
 {
   local additionalPath="${extLibs}/external/BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include"
+  # * Copy separate header subfolders
   rm -rf "${targetDir}/geant4"
   mkdir -p "${targetDir}/geant4"
   PrintBold "Copying Geant4 headers..."
   for folder in $(ls "${additionalPath}/G4Binding"); do
     cp -Rf "${additionalPath}/G4Binding/${folder}/${folder}" "${targetDir}/geant4"
   done
+  # * Copy separate hh files
+  local extensions=(h hh)
+  for ext in ${extensions[@]}; do
+    cp ${extLibs}/external/geant4/4.9.3p01/x86_64-slc6-gcc46-opt/include/*.$ext "${targetDir}/geant4"
+  done
 }
 FetchGeant4
 
 
-# * ================ *#
-# * --== Geant4 ==-- *#
-# * ================ *#
+# * ==================== *#
+# * --== Additional ==-- *#
+# * ==================== *#
 function FetchAdditional()
 {
-  local additionalPath="${extLibs}/external/BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include"
+  local additionalPath="${extLibs}/external"
   rm -rf "${targetDir}/Additional"
   mkdir -p "${targetDir}/Additional"
-  PrintBold "Copying Saxana headers..."
+  PrintBold "Copying Saxana and Reflex headers..."
   toCopy=(
-    "Common/Saxana/Saxana"
+    "BesGDML/2.8.0/x86_64-slc6-gcc46-opt/include/Common/Saxana/Saxana"
+    "ROOT/5.34.09/x86_64-slc6-gcc46-opt/root/include/Reflex"
   )
   for i in ${toCopy[@]}; do
     cp -Rf "${additionalPath}/$i" "${targetDir}/Additional"
