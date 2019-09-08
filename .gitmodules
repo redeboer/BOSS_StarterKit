@@ -16,3 +16,9 @@
 [submodule "ThirdParty/BOSS704/Gaudi"]
 	path = ThirdParty/BOSS704/Gaudi
 	url = https://gitlab.cern.ch/gaudi/Gaudi.git
+[submodule "ThirdParty/BOSS704/root"]
+	path = ThirdParty/BOSS704/root
+	url = http://root.cern.ch/git/root.git
+[submodule "ThirdParty/BOSS704/geant4"]
+	path = ThirdParty/BOSS704/geant4
+	url = https://gitlab.cern.ch/geant4/geant4.git
