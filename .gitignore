@@ -15,6 +15,7 @@ desktop.ini
 # Visual Studio Code
 .vscode
 *.code-workspace
+.ssh
 
 # Prerequisites
 *.d
