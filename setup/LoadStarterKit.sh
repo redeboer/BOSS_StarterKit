@@ -3,7 +3,12 @@
 export BOSS_StarterKit_OutputDir="${BOSS_StarterKit}/output"
 
 # Newest version of Git
-[[ -f "${BOSS_StarterKit}/ThirdParty/git/git" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git:$PATH
+if [[ -d "/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/git" ]]; then
+  source "/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/git/setup.sh"
+else
+  [[ -f "${BOSS_StarterKit}/ThirdParty/git/git" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git:$PATH
+  [[ -f "${BOSS_StarterKit}/ThirdParty/git-boss/git-boss" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git-boss:$PATH
+fi
 
 for i in $(find "${BOSS_StarterKit}" -type f -wholename "${BOSS_StarterKit}/*/setup.sh"); do
   [[ ! "${i}" =~ /cmt/ ]] && [[ ! "${i}" =~ /cmthome/ ]] && source "${i}"

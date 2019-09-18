@@ -25,3 +25,6 @@
 [submodule "ThirdParty/git"]
 	path = ThirdParty/git
 	url = https://github.com/git/git
+[submodule "ThirdParty/git-boss"]
+	path = ThirdParty/git-boss
+	url = http://code.ihep.ac.cn/redeboer/git-boss.git
