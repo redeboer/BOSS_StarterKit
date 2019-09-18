@@ -22,3 +22,6 @@
 [submodule "ThirdParty/BOSS704/geant4"]
 	path = ThirdParty/BOSS704/geant4
 	url = https://gitlab.cern.ch/geant4/geant4.git
+[submodule "ThirdParty/git"]
+	path = ThirdParty/git
+	url = https://github.com/git/git
