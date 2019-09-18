@@ -2,6 +2,9 @@
 
 export BOSS_StarterKit_OutputDir="${BOSS_StarterKit}/output"
 
+# Newest version of Git
+[[ -f "${BOSS_StarterKit}/ThirdParty/git/git" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git:$PATH
+
 for i in $(find "${BOSS_StarterKit}" -type f -wholename "${BOSS_StarterKit}/*/setup.sh"); do
   [[ ! "${i}" =~ /cmt/ ]] && [[ ! "${i}" =~ /cmthome/ ]] && source "${i}"
 done
