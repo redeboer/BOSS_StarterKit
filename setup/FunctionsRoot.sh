@@ -4,18 +4,22 @@ function rtcompile () {
   g++ "$1" -std=c++0x -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -o "${1/.*/.o}"
 }
 function rtcompilerun () {
-  rtcompile "$1"
-  if [ $? -eq 0 ]; then
-    ./${1/.*/.o}
+  local script="$1"
+  rtcompile "$script"
+  shift
+  if [[ $? -eq 0 ]]; then
+    ./${script/.*/.o} $*
   fi
 }
 function rtdebugcompile () {
   g++ "$1" -std=c++0x -I$(root-config --incdir) $(root-config --libs --evelibs --glibs) -lRooFit -lRooFitCore -lRooStats -lMinuit -fsanitize=address -o "${1/.*/.o}"
 }
 function rtdebugcompilerun () {
-  rtdebugcompile "$1"
-  if [ $? -eq 0 ]; then
-    ./${1/.*/.o}
+  local script="$1"
+  rtdebugcompile "$script"
+  shift
+  if [[ $? -eq 0 ]]; then
+    ./${script/.*/.o} $*
   fi
 }
 export rtcompile
