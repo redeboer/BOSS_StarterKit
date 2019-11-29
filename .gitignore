@@ -1,6 +1,6 @@
 # Submodules that should not be added
+workarea/Analysis/IniSelect
 workarea/Analysis/Physics/JpsiToDPV
-workarea/Analysis/Physics/RostamTest
 workarea/Analysis/Physics/rhopi_pipigg
 workarea/TestRelease
 

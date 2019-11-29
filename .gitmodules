@@ -4,9 +4,6 @@
 [submodule "jobs"]
 	path = jobs
 	url = git@github.com:redeboer/BOSS_JobSubmitter.git
-[submodule "workarea/Analysis/IniSelect"]
-	path = workarea/Analysis/IniSelect
-	url = git@github.com:redeboer/BOSS_IniSelect.git
 [submodule "ThirdParty/headers"]
 	path = ThirdParty/headers
 	url = https://github.com/redeboer/BOSS_ExternalLibs
