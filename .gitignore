@@ -1,7 +1,5 @@
 # Submodules that should not be added
-workarea/Analysis/IniSelect
-workarea/Analysis/Physics/JpsiToDPV
-workarea/Analysis/Physics/rhopi_pipigg
+workarea/Analysis/*/
 workarea/TestRelease
 
 # BOSS Starter Kit
