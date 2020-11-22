@@ -1,70 +1,28 @@
-# Submodules that should not be added
-workarea/Analysis/*/
-workarea/TestRelease
+# Output files
+*.dst
+*.pdf
+*.raw
+*.root
+*.rtraw
 
-# BOSS Starter Kit
-output
-/setup/BOSSVERSION
-/ThirdParty/headers/*/
-
-# Windows files
-desktop.ini
-
-# Visual Studio Code
-.vscode
-*.code-workspace
-.ssh
-
-# Prerequisites
+# Build files
+*.a
+*.app
 *.d
-extLibs/**/**
-
-# Compiled Object files
-*.slo
+*.dll
+*.dylib
+*.exe
+*.la
+*.lai
+*.lib
 *.lo
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
 *.out
-*.app
-
-# BOSS temporary files
-*.bosserr
-*.bosslog
-*.tmp
+*.slo
+*.so
 
 # CMT files
-**/cmt/cleanup.*
-**/cmt/setup.*
-*/*/*/*/*/cmt/cleanup.*
-*/*/*/*/*/cmt/setup.*
-*/*/*/*/cmt/cleanup.*
-*/*/*/*/cmt/setup.*
-*/*/*/cmt/cleanup.*
-*/*/*/cmt/setup.*
-*/*/cmt/cleanup.*
-*/*/cmt/setup.*
 **.cmtref
 **.fferr
 **.ffwarn
@@ -75,6 +33,17 @@ extLibs/**/**
 **.makesav
 **.shstamp
 **.stamp
+**/cmt/cleanup.*
+**/cmt/setup.*
+*/*/*/*/*/cmt/cleanup.*
+*/*/*/*/*/cmt/setup.*
+*/*/*/*/cmt/cleanup.*
+*/*/*/*/cmt/setup.*
+*/*/*/cmt/cleanup.*
+*/*/*/cmt/setup.*
+*/*/cmt/cleanup.*
+*/*/cmt/setup.*
+.sematic.cache
 core.*
 fort.*
 
@@ -82,22 +51,27 @@ fort.*
 CVS
 Entries
 Repository
+Root
 Tag
 
-# Binaries
-**.[oad]
-**.do
-**.exe
-**.make
-**.so
-*ACLiC_dict_rdict.pcm
-execute
-main
-workarea/InstallArea
+# Fortran module files
+*.mod
+*.smod
+
+# Precompiled Headers
+*.gch
+*.pch
 
 # Temporary files
 *.bosserr
 *.bosslog
 *.tmp
-temp
-temp.sh
+
+# Virtual environments
+*venv/
+.tox/
+pyvenv*/
+
+# Settings
+.idea/
+**.code-workspace

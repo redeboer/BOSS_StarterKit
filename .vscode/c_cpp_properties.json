@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "name": "Linux64/Win64",
+      "intelliSenseMode": "clang-x64",
+      "includePath": [
+        "/usr/include/c++/7",
+        "${workspaceFolder}/ThirdParty/headers/Additional",
+        "${workspaceFolder}/ThirdParty/headers/BOSS",
+        "${workspaceFolder}/ThirdParty/headers/CLHEP",
+        "${workspaceFolder}/ThirdParty/headers/Gaudi",
+        "${workspaceFolder}/ThirdParty/headers/geant4",
+        "${workspaceFolder}/ThirdParty/headers/mysql",
+        "${workspaceFolder}/ThirdParty/headers/root"
+      ],
+      "cStandard": "c11",
+      "cppStandard": "c++11"
+    }
+  ],
+  "version": 4
+}
