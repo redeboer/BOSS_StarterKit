@@ -18,7 +18,7 @@ else
   echo "Will load version ${BOSSVERSION} from now on. Change file"
   echo "  ${BOSSversionFile}"
   echo "if you want to switch version"
-  echo "${BOSSVERSION}" > ${BOSSversionFile}
+  echo "${BOSSVERSION}" >${BOSSversionFile}
 fi
 if [[ ! -d "${BesAreaTemp}/${BOSSVERSION}" ]]; then
   PrintError "BOSS version ${BOSSVERSION} does not exist!"

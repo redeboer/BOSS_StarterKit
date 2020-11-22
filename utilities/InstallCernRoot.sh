@@ -12,8 +12,7 @@
 
 # * Script parameters * #
 buildDir=".build"
-function AttemptToRun()
-{
+function AttemptToRun() {
   $@
   if [[ $? != 0 ]]; then
     echo -e "\e[31;1mERROR: Failed to run"
@@ -188,5 +187,5 @@ export ROOTSYS=${installDir}
 export PATH=\$ROOTSYS/bin:\$PATH
 export PYTHONDIR=\$ROOTSYS
 export LD_LIBRARY_PATH=\$ROOTSYS/lib:\$PYTHONDIR/lib:\$ROOTSYS/bindings/pyroot:\$LD_LIBRARY_PATH
-export PYTHONPATH=\$ROOTSYS/lib:\$PYTHONPATH:\$ROOTSYS/bindings/pyroot" >> ~/.bashrc
+export PYTHONPATH=\$ROOTSYS/lib:\$PYTHONPATH:\$ROOTSYS/bindings/pyroot" >>~/.bashrc
 nano ~/.bashrc
