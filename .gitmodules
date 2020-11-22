@@ -1,27 +1,27 @@
 [submodule "workarea/Tutorials"]
-	path = workarea/Tutorials
-	url = git@github.com:redeboer/BOSS_Tutorials.git
+path = workarea/Tutorials
+url = git@github.com:redeboer/BOSS_Tutorials.git
 [submodule "jobs"]
-	path = jobs
-	url = git@github.com:redeboer/BOSS_JobSubmitter.git
+path = jobs
+url = git@github.com:redeboer/BOSS_JobSubmitter.git
 [submodule "ThirdParty/headers"]
-	path = ThirdParty/headers
-	url = https://github.com/redeboer/BOSS_ExternalLibs
+path = ThirdParty/headers
+url = https://github.com/redeboer/BOSS_ExternalLibs
 [submodule "ThirdParty/BOSS704/CLHEP"]
-	path = ThirdParty/BOSS704/CLHEP
-	url = https://gitlab.cern.ch/CLHEP/CLHEP.git
+path = ThirdParty/BOSS704/CLHEP
+url = https://gitlab.cern.ch/CLHEP/CLHEP.git
 [submodule "ThirdParty/BOSS704/Gaudi"]
-	path = ThirdParty/BOSS704/Gaudi
-	url = https://gitlab.cern.ch/gaudi/Gaudi.git
+path = ThirdParty/BOSS704/Gaudi
+url = https://gitlab.cern.ch/gaudi/Gaudi.git
 [submodule "ThirdParty/BOSS704/root"]
-	path = ThirdParty/BOSS704/root
-	url = http://root.cern.ch/git/root.git
+path = ThirdParty/BOSS704/root
+url = http://root.cern.ch/git/root.git
 [submodule "ThirdParty/BOSS704/geant4"]
-	path = ThirdParty/BOSS704/geant4
-	url = https://gitlab.cern.ch/geant4/geant4.git
+path = ThirdParty/BOSS704/geant4
+url = https://gitlab.cern.ch/geant4/geant4.git
 [submodule "ThirdParty/git"]
-	path = ThirdParty/git
-	url = https://github.com/git/git
+path = ThirdParty/git
+url = https://github.com/git/git
 [submodule "ThirdParty/git-boss"]
-	path = ThirdParty/git-boss
-	url = http://code.ihep.ac.cn/redeboer/git-boss.git
+path = ThirdParty/git-boss
+url = http://code.ihep.ac.cn/redeboer/git-boss.git
