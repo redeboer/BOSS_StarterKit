@@ -22,4 +22,3 @@ endif
 /bin/rm -f ${cmtcmt_standalonetempfile}
 unset cmtcmt_standalonetempfile
 exit $cmtsetupstatus
-

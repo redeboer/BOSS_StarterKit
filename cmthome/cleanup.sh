@@ -22,4 +22,3 @@ fi
 /bin/rm -f ${cmtcmt_standalonetempfile}
 unset cmtcmt_standalonetempfile
 return $cmtcleanupstatus
-
