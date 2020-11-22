@@ -1,7 +1,7 @@
 # echo "cleanup cmt_standalone v0 in ${BOSS_StarterPack}/cmthome"
 
 if ( $?CMTROOT == 0 ) then
-  setenv CMTROOT /afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/CMT/v1r25
+  setenv CMTROOT /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25
 endif
 source ${CMTROOT}/mgr/setup.csh
 set cmtcmt_standalonetempfile=`${CMTROOT}/mgr/cmt -quiet build temporary_name`

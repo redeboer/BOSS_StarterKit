@@ -10,7 +10,7 @@ alias reloadstarterkit="source ${scriptPath}/setup.sh"
 source "setup/FunctionsPrint.sh"
 source "setup/FunctionsRoot.sh"
 source "setup/Functions.sh"
-[[ -d "/afs/ihep.ac.cn/bes3/offline" ]] && source "setup/LoadBoss.sh"
+[[ -d "/cvmfs/bes3.ihep.ac.cn/bes3sw" ]] && source "setup/LoadBoss.sh"
 source "setup/LoadStarterKit.sh"
 source "setup/Aliases.sh"
 

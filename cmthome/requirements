@@ -1,9 +1,9 @@
 author Qiumei Ma <maqm@ihep.ac.cn>
 
 # set the SITEROOT
-set SITETOPROOT "/afs/ihep.ac.cn/bes3/offline"
-set SITEROOT "/afs/ihep.ac.cn/bes3/offline"
-set DEVROOT "/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6"
+set SITETOPROOT "/cvmfs/bes3.ihep.ac.cn/bes3sw"
+set SITEROOT "/cvmfs/bes3.ihep.ac.cn/bes3sw"
+set DEVROOT "/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6"
 set EXTERNALLIBDIR "$(DEVROOT)/ExternalLib"
 set CONTRIBDIR "$(DEVROOT)/contrib"
 # set the offset in cvs repository

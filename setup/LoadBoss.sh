@@ -1,6 +1,6 @@
 #!/bin/bash -
 # echo "Loading \"${BASH_SOURCE[0]/$(dirname ${BOSS_StarterKit})\/}\""
-BesAreaTemp="/afs/ihep.ac.cn/bes3/offline/Boss"
+BesAreaTemp="/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss"
 defaultVersion="7.0.4"
 
 # * BOSS paths and parameters * #
@@ -37,7 +37,7 @@ export BESFS="/besfs/users/${USER}"
 export BOSSINSTALL="${BOSS_StarterKit}"
 export IHEPBATCH="/ihepbatch/bes/${USER}"
 export SCRATCHFS="/scratchfs/bes/${USER}"
-# CMTHOME="/afs/ihep.ac.cn/bes3/offline/Boss/cmthome/cmthome-${BOSSVERSION}"
+# CMTHOME="/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/cmthome/cmthome-${BOSSVERSION}"
 
 # * Load BOSS essentials * #
 source "${BOSSINSTALL}/${CMTHOMENAME}/setupCMT.sh"

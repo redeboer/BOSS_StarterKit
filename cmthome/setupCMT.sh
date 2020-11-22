@@ -1,4 +1,4 @@
-export DEVROOT=/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6
+export DEVROOT=/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6
 export EXTERNALLIBDIR=$DEVROOT/ExternalLib
 export CONTRIBDIR=$DEVROOT/contrib
 

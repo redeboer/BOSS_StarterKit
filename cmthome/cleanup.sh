@@ -1,7 +1,7 @@
 # echo "cleanup cmt_standalone v0 in ${BOSS_StarterPack}/cmthome"
 
 if test "${CMTROOT}" = ""; then
-  CMTROOT=/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/CMT/v1r25
+  CMTROOT=/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25
   export CMTROOT
 fi
 . ${CMTROOT}/mgr/setup.sh

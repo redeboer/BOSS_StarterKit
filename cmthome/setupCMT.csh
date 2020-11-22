@@ -1,4 +1,4 @@
-setenv DEVROOT /afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6
+setenv DEVROOT /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6
 setenv EXTERNALLIBDIR $DEVROOT/ExternalLib
 setenv CONTRIBDIR $DEVROOT/contrib
 

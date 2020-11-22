@@ -8,7 +8,7 @@ BOSSINSTALLdefault="/besfs/users/${USER}/boss-${BOSSVERSION}"
 read -e -p "  - What do you want to be your workarea? (default \"$BOSSINSTALLdefault\") " BOSSINSTALL
 export BOSSINSTALL=${BOSSINSTALL:-$BOSSINSTALLdefault}
 
-CMTHOME="/afs/ihep.ac.cn/bes3/offline/Boss/cmthome/cmthome-${BOSSVERSION}"
+CMTHOME="/cvmfs/bes3.ihep.ac.cn/bes3sw/Boss/cmthome/cmthome-${BOSSVERSION}"
 CMTHOMENAME="cmthome"
 WORKAREANAME="workarea"
 

@@ -3,8 +3,8 @@
 export BOSS_StarterKit_OutputDir="${BOSS_StarterKit}/output"
 
 # Newest version of Git
-if [[ -d "/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/git" ]]; then
-  source "/afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/git/setup.sh"
+if [[ -d "/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/git" ]]; then
+  source "/cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/git/setup.sh"
 else
   [[ -f "${BOSS_StarterKit}/ThirdParty/git/git" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git:$PATH
   [[ -f "${BOSS_StarterKit}/ThirdParty/git-boss/git-boss" ]] && export PATH=${BOSS_StarterKit}/ThirdParty/git-boss:$PATH
